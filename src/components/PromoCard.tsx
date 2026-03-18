@@ -11,11 +11,11 @@ export const PromoCard = () => {
             />
             
             <View className="z-10 gap-y-2">
-                <Text className="text-3xl font-bold text-slate-600 leading-tight">
+                <Text className="text-3xl font-bold text-slate-600 leading-tight font-outfit">
                     Summer Sale{"\n"}Up to 50% Off
                 </Text>
                 
-                <Text className="text-slate-500 text-md mb-4">
+                <Text className="text-slate-500 text-md mb-4 font-inter">
                     Discover our latest collections
                 </Text>
 
@@ -23,7 +23,7 @@ export const PromoCard = () => {
                     className="bg-white px-6 py-3 rounded-xl self-start shadow-sm"
                     activeOpacity={0.8}
                 >
-                    <Text className="text-sky-500 font-bold text-sm">SHOP NOW</Text>
+                    <Text className="text-sky-500 font-bold text-sm font-inter">SHOP NOW</Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -15,8 +15,8 @@ export default function CategoryList() {
     return (
         <View className="w-full mt-6 px-4">
             <View className="flex flex-row justify-between items-center mb-4">
-                <Text className="text-lg font-bold text-slate-900">Categories</Text>
-                <Text className="text-sky-600 font-semibold text-sm">See All</Text>
+                <Text className="text-lg font-bold text-slate-900 font-outfit">Categories</Text>
+                <Text className="text-sky-600 font-semibold text-sm font-inter">See All</Text>
             </View>
             <ScrollView
                 horizontal

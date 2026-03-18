@@ -7,7 +7,7 @@ export default function ProfileScreen() {
         <View className="flex-1 bg-slate-50">
             <Topbar isLoggedIn={false} showSearch={false} />
             <View className="flex-1 items-center justify-center">
-                <Text className="text-xl font-bold text-slate-800">Profile</Text>
+                <Text className="text-xl font-bold text-slate-800 font-outfit">Profile</Text>
             </View>
         </View>
     );

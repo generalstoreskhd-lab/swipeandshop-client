@@ -32,14 +32,14 @@ export default function ProductCard({ image, category, name, price, rating, onAd
 
             {/* Content Container */}
             <View className="p-3 gap-y-1">
-                <Text className="text-[10px] font-bold text-sky-400 uppercase tracking-wider">{category}</Text>
-                <Text className="text-slate-900 font-bold text-sm" numberOfLines={1}>{name}</Text>
+                <Text className="text-[10px] font-bold text-sky-400 uppercase tracking-wider font-inter">{category}</Text>
+                <Text className="text-slate-900 font-bold text-sm font-outfit" numberOfLines={1}>{name}</Text>
 
                 <View className="flex flex-row items-center justify-between mt-1">
-                    <Text className="text-slate-900 font-bold text-md">${price.toFixed(2)}</Text>
+                    <Text className="text-slate-900 font-bold text-md font-outfit">${price.toFixed(2)}</Text>
                     <View className="flex flex-row items-center gap-x-1">
                         <Ionicons name="star" size={12} color="#fbbf24" />
-                        <Text className="text-slate-400 text-[10px] font-medium">{rating}</Text>
+                        <Text className="text-slate-400 text-[10px] font-medium font-inter">{rating}</Text>
                     </View>
                 </View>
 
@@ -48,7 +48,7 @@ export default function ProductCard({ image, category, name, price, rating, onAd
                     onPress={onAddPress}
                     className="bg-sky-200 py-2 rounded-xl mt-2 items-center active:bg-sky-300"
                 >
-                    <Text className="text-sky-600 font-bold text-xs">Add to Cart</Text>
+                    <Text className="text-sky-600 font-bold text-xs font-inter">Add to Cart</Text>
                 </TouchableOpacity>
             </View>
         </View>

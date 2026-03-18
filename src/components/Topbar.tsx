@@ -15,18 +15,18 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true }: Topb
     const [searchQuery, setSearchQuery] = useState("");
 
     return (
-        <View className="w-full bg-white border-b border-slate-100 p-4 pt-8">
+        <View className="w-full bg-white border-b border-slate-100 p-4 pt-8 z-[1000]">
             {/* First Row: Brand and Actions */}
             <View className="flex-row items-center justify-between mb-3">
                 <View className="flex-row items-center flex-1">
                     {isLoggedIn ? (
                         <View className="flex-col">
-                            <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Welcome back</Text>
-                            <Text className="text-xl font-bold text-slate-900">Hello {userName || 'User'}</Text>
+                            <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-inter">Welcome back</Text>
+                            <Text className="text-xl font-bold text-slate-900 font-outfit">Hello {userName || 'User'}</Text>
                         </View>
                     ) : (
                         <View className="flex-row items-center flex-none">
-                            <View className="w-24 h-24 bg-slate-50 rounded-xl items-center justify-center mr-3 overflow-hidden">
+                            <View className="w-24 h-24  rounded-xl items-center justify-center mr-3 overflow-hidden">
                                 <Image
                                     source={logo}
                                     className="w-full h-full"
@@ -36,7 +36,7 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true }: Topb
 
 
                             <View className="flex-col">
-                                <Text className="text-lg font-bold text-slate-900 leading-tight">Swipe & Shop</Text>
+                                <Text className="text-lg font-bold text-slate-900 leading-tight font-outfit">Swipe & Shop</Text>
                             </View>
                         </View>
 
@@ -59,7 +59,7 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true }: Topb
                     <Ionicons name="search-outline" size={20} color="#64748b" />
                     <TextInput
                         placeholder="Search products..."
-                        className="ml-3 flex-1 text-slate-900 text-sm font-medium"
+                        className="ml-3 flex-1 text-slate-900 text-sm font-medium font-inter"
                         placeholderTextColor="#94a3b8"
                         value={searchQuery}
                         onChangeText={setSearchQuery}

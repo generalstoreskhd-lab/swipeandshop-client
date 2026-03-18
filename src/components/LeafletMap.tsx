@@ -1,5 +1,4 @@
-import React from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 interface LeafletMapProps {
@@ -52,14 +51,14 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
   `;
 
   return (
-    <View style={styles.container} className="rounded-2xl overflow-hidden border-2 border-slate-200 bg-slate-100">
+    <View className="h-[200px] w-full rounded-2xl overflow-hidden border-2 border-slate-200 bg-slate-100">
       <WebView
         originWhitelist={['*']}
         source={{ html: mapHtml }}
-        style={styles.map}
+        className="flex-1"
         startInLoadingState={true}
         renderLoading={() => (
-          <View style={styles.loading}>
+          <View className="absolute inset-0 justify-center items-center bg-slate-50">
             <ActivityIndicator size="large" color="#0ea5e9" />
           </View>
         )}
@@ -67,19 +66,3 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: 200,
-    width: '100%',
-  },
-  map: {
-    flex: 1,
-  },
-  loading: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f8fafc',
-  },
-});

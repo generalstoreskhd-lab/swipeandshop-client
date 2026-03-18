@@ -26,9 +26,9 @@ export default function MainTabNavigator() {
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Swipe') {
-                        iconName = focused ? 'layers' : 'layers-outline';
+                        iconName = focused ? 'flame' : 'flame-outline';
                     } else if (route.name === 'Orders') {
-                        iconName = focused ? 'bag' : 'bag-outline';
+                        iconName = focused ? 'cart' : 'cart-outline';
                     } else if (route.name === 'Profile') {
                         iconName = focused ? 'person' : 'person-outline';
                     } else {
@@ -49,6 +49,7 @@ export default function MainTabNavigator() {
                 tabBarLabelStyle: {
                     fontSize: 12,
                     fontWeight: '500',
+                    fontFamily: 'Inter_500Medium',
                 },
             })}
         >

@@ -48,9 +48,9 @@ export default function NewArrivals() {
     return (
         <View className="w-full mt-8 px-4">
             <View className="flex flex-row justify-between items-center mb-6">
-                <Text className="text-xl font-bold text-slate-900">New Arrivals</Text>
+                <Text className="text-xl font-bold text-slate-900 font-outfit">New Arrivals</Text>
                 <TouchableOpacity>
-                    <Text className="text-sky-600 font-semibold text-sm">See All</Text>
+                    <Text className="text-sky-600 font-semibold text-sm font-inter">See All</Text>
                 </TouchableOpacity>
             </View>
 
