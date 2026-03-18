@@ -3,13 +3,16 @@ import { View, Text, TouchableOpacity } from "react-native";
 import ProductCard from "./ProductCard";
 
 // Import images
-import logo from "../assets/images/logo.png"
+import earbuds from "../assets/images/products/earbuds.png"
+import shirt from "../assets/images/products/shirt.png"
+import lamp from "../assets/images/products/lamp.png"
+import serum from "../assets/images/products/serum.png"
 
 
 const products = [
     {
         id: "1",
-        image: logo,
+        image: earbuds,
         category: "ELECTRONICS",
         name: "Wireless Earbuds Pro",
         price: 129.00,
@@ -17,7 +20,7 @@ const products = [
     },
     {
         id: "2",
-        image: logo,
+        image: shirt,
         category: "FASHION",
         name: "Minimalist Linen Shirt",
         price: 45.00,
@@ -25,7 +28,7 @@ const products = [
     },
     {
         id: "3",
-        image: logo,
+        image: lamp,
         category: "HOME",
         name: "Ceramic Table Lamp",
         price: 78.00,
@@ -33,7 +36,7 @@ const products = [
     },
     {
         id: "4",
-        image: logo,
+        image: serum,
         category: "BEAUTY",
         name: "Organic Skin Serum",
         price: 32.50,

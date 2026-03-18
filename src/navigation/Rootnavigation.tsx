@@ -17,10 +17,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function RootNavigation() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login" component={RegisterScreen} />
-            <Stack.Screen name="Verify" component={PhoneVerification} />
-            <Stack.Screen name="Name" component={NameScreen} />
-            <Stack.Screen name="Address" component={AddressScreen} />
+            <Stack.Screen name="Login" component={RegisterScreen} options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="Verify" component={PhoneVerification} options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="Name" component={NameScreen} options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="Address" component={AddressScreen} options={{ animation: 'slide_from_right' }} />
         </Stack.Navigator>
     );
 }

@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ImageSourcePropType } from "react-native";
+import { View, Text, TouchableOpacity, ImageSourcePropType } from "react-native";
+import { Image } from 'expo-image';
+
 import { Ionicons } from "@expo/vector-icons";
 
 interface ProductCardProps {
@@ -15,12 +17,13 @@ export default function ProductCard({ image, category, name, price, rating, onAd
     return (
         <View className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-50 w-[48%] mb-4">
             {/* Image Container */}
-            <View className="relative w-full aspect-square bg-slate-50">
-                <Image 
-                    source={image} 
+            <View className="relative w-full aspect-square bg-slate-50 p-3">
+                <Image
+                    source={image}
                     className="w-full h-full"
-                    resizeMode="cover"
+                    resizeMode="contain"
                 />
+
                 {/* Wishlist Heart */}
                 <TouchableOpacity className="absolute top-3 right-3 bg-white/80 p-2 rounded-full">
                     <Ionicons name="heart-outline" size={18} color="#64748b" />
@@ -31,7 +34,7 @@ export default function ProductCard({ image, category, name, price, rating, onAd
             <View className="p-3 gap-y-1">
                 <Text className="text-[10px] font-bold text-sky-400 uppercase tracking-wider">{category}</Text>
                 <Text className="text-slate-900 font-bold text-sm" numberOfLines={1}>{name}</Text>
-                
+
                 <View className="flex flex-row items-center justify-between mt-1">
                     <Text className="text-slate-900 font-bold text-md">${price.toFixed(2)}</Text>
                     <View className="flex flex-row items-center gap-x-1">
@@ -41,7 +44,7 @@ export default function ProductCard({ image, category, name, price, rating, onAd
                 </View>
 
                 {/* Add to Cart Button */}
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={onAddPress}
                     className="bg-sky-200 py-2 rounded-xl mt-2 items-center active:bg-sky-300"
                 >

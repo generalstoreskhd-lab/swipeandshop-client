@@ -8,7 +8,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 
 export type MainTabParamList = {
     Home: undefined;
-    Browse: undefined;
+    Swipe: undefined;
     Orders: undefined;
     Profile: undefined;
 };
@@ -25,8 +25,8 @@ export default function MainTabNavigator() {
 
                     if (route.name === 'Home') {
                         iconName = focused ? 'home' : 'home-outline';
-                    } else if (route.name === 'Browse') {
-                        iconName = focused ? 'grid' : 'grid-outline';
+                    } else if (route.name === 'Swipe') {
+                        iconName = focused ? 'layers' : 'layers-outline';
                     } else if (route.name === 'Orders') {
                         iconName = focused ? 'bag' : 'bag-outline';
                     } else if (route.name === 'Profile') {
@@ -42,9 +42,9 @@ export default function MainTabNavigator() {
                 tabBarStyle: {
                     borderTopWidth: 1,
                     borderTopColor: '#f1f5f9',
-                    height: 60,
-                    paddingBottom: 10,
-                    paddingTop: 5,
+                    height: 95,
+                    paddingBottom: 35,
+                    paddingTop: 10,
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,
@@ -53,7 +53,7 @@ export default function MainTabNavigator() {
             })}
         >
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Browse" component={BrowseScreen} />
+            <Tab.Screen name="Swipe" component={BrowseScreen} />
             <Tab.Screen name="Orders" component={OrdersScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
