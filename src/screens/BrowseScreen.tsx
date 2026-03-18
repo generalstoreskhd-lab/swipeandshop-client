@@ -60,8 +60,10 @@ const SWIPE_PRODUCTS = [
  * Handles the 'Empty' state when all products have been swiped.
  */
 export default function BrowseScreen() {
-    /** Track if the user has seen all products in the current session */
-    const [isEmpty, setIsEmpty] = React.useState(false);
+    /** Track the current product being viewed */
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const isEmpty = currentIndex >= SWIPE_PRODUCTS.length;
+
     /** Reference to SwipeDeck to trigger manual swipes from bottom buttons */
     const deckRef = React.useRef<SwipeDeckRef>(null);
 
@@ -71,6 +73,7 @@ export default function BrowseScreen() {
      */
     const handleSwipeRight = (product: any) => {
         console.log('Liked:', product.name);
+        setCurrentIndex(prev => prev + 1);
     };
 
     /**
@@ -78,6 +81,7 @@ export default function BrowseScreen() {
      */
     const handleSwipeLeft = (product: any) => {
         console.log('Passed:', product.name);
+        setCurrentIndex(prev => prev + 1);
     };
 
     return (
@@ -86,13 +90,30 @@ export default function BrowseScreen() {
                 {/* Swipe Area - Takes full space for perfect vertical centering */}
                 <View className="flex-1 items-center justify-center ">
                     {!isEmpty ? (
-                        <SwipeDeck
-                            ref={deckRef}
-                            data={SWIPE_PRODUCTS}
-                            onSwipeRight={handleSwipeRight}
-                            onSwipeLeft={handleSwipeLeft}
-                            onEmpty={() => setIsEmpty(true)}
-                        />
+                        <>
+                            <SwipeDeck
+                                ref={deckRef}
+                                data={SWIPE_PRODUCTS}
+                                currentIndex={currentIndex}
+                                onSwipeRight={handleSwipeRight}
+                                onSwipeLeft={handleSwipeLeft}
+                            />
+                            {/* Bottom Controls - Moved inside the !isEmpty block for guaranteed hiding */}
+                            <View className="absolute bottom-[-40] left-0 right-0 flex flex-row justify-center gap-x-12 px-6">
+                                <TouchableOpacity
+                                    onPress={() => deckRef.current?.swipeLeft()}
+                                    className="bg-white w-20 h-20 rounded-full shadow-xl border border-slate-100 items-center justify-center active:bg-slate-50"
+                                >
+                                    <Ionicons name="close" size={40} color="#f43f5e" />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => deckRef.current?.swipeRight()}
+                                    className="bg-white w-20 h-20 rounded-full shadow-xl border border-slate-100 items-center justify-center active:bg-slate-50"
+                                >
+                                    <Ionicons name="cart" size={40} color="#10b981" />
+                                </TouchableOpacity>
+                            </View>
+                        </>
                     ) : (
                         <View className="flex-1 items-center justify-center p-10">
                             <View className="bg-white p-8 rounded-full shadow-sm mb-6">
@@ -106,31 +127,13 @@ export default function BrowseScreen() {
                             </Text>
                             <TouchableOpacity
                                 className="bg-sky-500 px-8 py-4 rounded-2xl shadow-lg active:bg-sky-600"
-                                onPress={() => setIsEmpty(false)}
+                                onPress={() => setCurrentIndex(0)}
                             >
                                 <Text className="text-white font-bold font-inter text-lg">Restart Discovery</Text>
                             </TouchableOpacity>
                         </View>
                     )}
                 </View>
-
-                {/* Bottom Controls - Moved lower to avoid hiding card text */}
-                {!isEmpty && (
-                    <View className="absolute bottom-[-40] left-0 right-0 flex flex-row justify-center gap-x-12 px-6">
-                        <TouchableOpacity
-                            onPress={() => deckRef.current?.swipeLeft()}
-                            className="bg-white w-20 h-20 rounded-full shadow-xl border border-slate-100 items-center justify-center active:bg-slate-50"
-                        >
-                            <Ionicons name="close" size={40} color="#f43f5e" />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => deckRef.current?.swipeRight()}
-                            className="bg-white w-20 h-20 rounded-full shadow-xl border border-slate-100 items-center justify-center active:bg-slate-50"
-                        >
-                            <Ionicons name="heart" size={40} color="#10b981" />
-                        </TouchableOpacity>
-                    </View>
-                )}
             </View>
         </HomeLayout>
     );

@@ -1,14 +1,16 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { View, Dimensions, Text } from 'react-native';
-import { 
-    Gesture, 
-    GestureDetector, 
-    GestureHandlerRootView 
+import {
+    Gesture,
+    GestureDetector,
+    GestureHandlerRootView
 } from 'react-native-gesture-handler';
-import Animated, { 
-    useSharedValue, 
-    useAnimatedStyle, 
-    withSpring, 
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+    withTiming,
+    Easing,
     runOnJS,
     interpolate,
     Extrapolation
@@ -22,12 +24,12 @@ const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25;
 interface SwipeDeckProps {
     /** Array of products to display in the deck */
     data: any[];
+    /** The index of the current top card (managed by parent) */
+    currentIndex: number;
     /** Callback triggered when a card is swiped left (disliked) */
     onSwipeLeft?: (item: any) => void;
     /** Callback triggered when a card is swiped right (liked) */
     onSwipeRight?: (item: any) => void;
-    /** Callback triggered when the deck is empty */
-    onEmpty?: () => void;
 }
 
 /**
@@ -40,44 +42,48 @@ export interface SwipeDeckRef {
     swipeRight: () => void;
 }
 
-const SwipeDeck = forwardRef<SwipeDeckRef, SwipeDeckProps>(({ data, onSwipeLeft, onSwipeRight, onEmpty }, ref) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+const SwipeDeck = forwardRef<SwipeDeckRef, SwipeDeckProps>((props, ref) => {
+    const { data, currentIndex, onSwipeLeft, onSwipeRight } = props;
     const translateX = useSharedValue(0);
+    
+    // Sync props to a ref to ensure runOnJS always has the latest handlers
+    const propsRef = React.useRef(props);
+    React.useEffect(() => {
+        propsRef.current = props;
+    });
 
     useImperativeHandle(ref, () => ({
         swipeLeft: () => {
-            translateX.value = withSpring(-SCREEN_WIDTH * 1.5, { damping: 20 }, () => {
+            if (currentIndex >= data.length) return;
+            translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 200, easing: Easing.out(Easing.ease) }, () => {
                 runOnJS(completeSwipe)('left');
             });
         },
         swipeRight: () => {
-            translateX.value = withSpring(SCREEN_WIDTH * 1.5, { damping: 20 }, () => {
+            if (currentIndex >= data.length) return;
+            translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 200, easing: Easing.out(Easing.ease) }, () => {
                 runOnJS(completeSwipe)('right');
             });
         }
-    }));
+    }), [currentIndex, data.length]);
 
     /**
      * Handles the completion of a swipe gesture.
      * Moves to the next index and resets translation, or signals empty deck.
      */
     const completeSwipe = (direction: 'left' | 'right') => {
-        const nextIndex = currentIndex + 1;
-        const item = data[currentIndex];
+        const { currentIndex: latestIndex, data: latestData, onSwipeLeft: handleLeft, onSwipeRight: handleRight } = propsRef.current;
+        const item = latestData[latestIndex];
         
+        // Signal the parent to update index
         if (direction === 'left') {
-            onSwipeLeft?.(item);
+            runOnJS(handleLeft!)(item);
         } else {
-            onSwipeRight?.(item);
+            runOnJS(handleRight!)(item);
         }
 
-        if (nextIndex < data.length) {
-            setCurrentIndex(nextIndex);
-            translateX.value = 0;
-        } else {
-            onEmpty?.();
-            setCurrentIndex(data.length); // End of deck
-        }
+        // Parent re-renders will update props, but we reset translation here
+        translateX.value = 0;
     };
 
     /**
@@ -93,11 +99,10 @@ const SwipeDeck = forwardRef<SwipeDeckRef, SwipeDeckProps>(({ data, onSwipeLeft,
             if (Math.abs(event.translationX) > SWIPE_THRESHOLD) {
                 const direction = event.translationX > 0 ? 'right' : 'left';
                 const dest = direction === 'right' ? SCREEN_WIDTH * 1.5 : -SCREEN_WIDTH * 1.5;
-                
-                translateX.value = withSpring(dest, { 
-                    velocity: event.velocityX,
-                    damping: 20,
-                    stiffness: 100
+
+                translateX.value = withTiming(dest, {
+                    duration: 200,
+                    easing: Easing.out(Easing.ease)
                 }, () => {
                     runOnJS(completeSwipe)(direction);
                 });
@@ -118,25 +123,25 @@ const SwipeDeck = forwardRef<SwipeDeckRef, SwipeDeckProps>(({ data, onSwipeLeft,
         <View className="flex-1 items-center justify-center relative w-full h-full">
             {cardsToRender.map((item, index) => {
                 const isTopCard = index === cardsToRender.length - 1;
-                
+
                 if (isTopCard) {
                     return (
-                        <GestureDetector gesture={gesture} key={item.id}>
-                            <SwipeCard 
-                                product={item} 
-                                index={0} 
-                                translateX={translateX} 
+                        <GestureDetector gesture={gesture} key={`top-${item.id}-${currentIndex}`}>
+                            <SwipeCard
+                                product={item}
+                                index={0}
+                                translateX={translateX}
                             />
                         </GestureDetector>
                     );
                 }
 
                 return (
-                    <SwipeCard 
-                        key={item.id} 
-                        product={item} 
-                        index={1} 
-                        translateX={translateX} 
+                    <SwipeCard
+                        key={`back-${item.id}-${currentIndex}`}
+                        product={item}
+                        index={1}
+                        translateX={translateX}
                     />
                 );
             })}
