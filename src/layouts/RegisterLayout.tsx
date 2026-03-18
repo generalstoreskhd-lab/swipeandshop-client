@@ -8,7 +8,7 @@ export type RegisterlayoutProps = {
 export const RegisterLayout = ({ children }: RegisterlayoutProps) => {
     return (
 
-        <View className="flex-1 w-full h-full bg-slate-50 p-8">
+        <View className="flex-1 w-full h-full bg-slate-50">
             {children}
         </View>
 

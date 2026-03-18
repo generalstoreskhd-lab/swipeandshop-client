@@ -25,7 +25,7 @@ export default function NameScreen({ navigation }: Props) {
                     <Text className="text-sm font-semibold text-slate-500 ml-1">Full Name</Text>
                     <TextInput
                         placeholder="Enter your name"
-                        className={`${error ? "border-red-400" : "border-slate-200"} border-2 border-slate-200 rounded-xl px-4 py-3 w-full h-48`}
+                        className={`${error ? "border-red-400" : "border-slate-200"} border-2 border-slate-200 rounded-xl px-4 py-3 w-full`}
                     />
                 </View>
                 {error && <Text className="text-red-500">{error}</Text>}

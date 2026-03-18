@@ -28,7 +28,7 @@ export default function PhoneVerification({ navigation }: Props) {
                 </View>
                 <View className="flex-col items-center justify-start gap-y-6 text-center p-6">
                     <Image source={lock} alt="lock" className="h-8 w-8"></Image>
-                    <Text className="text-3xl font-bold text-slate-900">Enter Verification Code</Text>
+                    <Text className="text-3xl font-bold text-slate-900 text-center">Enter Verification Code</Text>
                     <Text className="text-md text-center font-light text-slate-600">
                         We have sent a verification code to
                         <Text className="text-md font-semibold text-slate-900"> +91 9544407064 </Text>Please
