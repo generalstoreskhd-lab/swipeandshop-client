@@ -44,6 +44,12 @@ const products = [
     }
 ];
 
+/**
+ * NewArrivals Component
+ * Displays a 2-column grid of `ProductCard` components on the HomeScreen.
+ * Shows a "New Arrivals" header with a "See All" link.
+ * Products are currently hardcoded; they will be fetched from an API in the future.
+ */
 export default function NewArrivals() {
     return (
         <View className="w-full mt-8 px-4">

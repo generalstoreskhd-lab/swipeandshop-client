@@ -5,12 +5,28 @@ import { Image } from 'expo-image';
 import logo from "../assets/images/logo.png";
 import { Ionicons } from "@expo/vector-icons";
 
+/**
+ * Props for the Topbar component.
+ * @property isLoggedIn - Determines whether to show the greeting or the brand logo
+ * @property userName - User's name, displayed in the greeting when logged in
+ * @property showSearch - Controls visibility of the search bar (default: true)
+ */
 interface TopbarProps {
     isLoggedIn: boolean;
     userName?: string;
     showSearch?: boolean;
 }
 
+/**
+ * Topbar Component
+ * The app's primary navigation header. Renders two layouts:
+ * - **Logged-out**: Brand logo + "Swipe & Shop" title
+ * - **Logged-in**: Personalized greeting with the user's name
+ *
+ * Always includes notification and cart action icons.
+ * Optionally renders a search bar with live query state and a clear button.
+ * Uses `z-[1000]` to stay above all stacked content (e.g., swipe cards).
+ */
 export default function Topbar({ isLoggedIn, userName, showSearch = true }: TopbarProps) {
     const [searchQuery, setSearchQuery] = useState("");
 

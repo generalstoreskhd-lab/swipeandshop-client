@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ImageSourcePropType } from "react-native";
 import { Image } from 'expo-image';
-
 import { Ionicons } from "@expo/vector-icons";
 
 interface ProductCardProps {
@@ -10,10 +9,13 @@ interface ProductCardProps {
     name: string;
     price: number;
     rating: number;
-    onAddPress?: () => void;
+    unit?: string;
+    onAddPress?: (quantity: number) => void;
 }
 
-export default function ProductCard({ image, category, name, price, rating, onAddPress }: ProductCardProps) {
+export default function ProductCard({ image, category, name, price, rating, unit = "pc", onAddPress }: ProductCardProps) {
+    const [quantity, setQuantity] = useState(1);
+
     return (
         <View className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-50 w-[48%] mb-4">
             {/* Image Container */}
@@ -43,9 +45,29 @@ export default function ProductCard({ image, category, name, price, rating, onAd
                     </View>
                 </View>
 
+                {/* Quantity Row */}
+                <View className="flex flex-row items-center justify-between mt-2 bg-slate-50 rounded-xl px-2 py-1.5">
+                    <View className="flex flex-row items-center gap-x-1.5">
+                        <TouchableOpacity
+                            onPress={() => setQuantity(q => Math.max(1, q - 1))}
+                            className="bg-white w-7 h-7 rounded-lg items-center justify-center shadow-sm"
+                        >
+                            <Ionicons name="remove" size={14} color="#334155" />
+                        </TouchableOpacity>
+                        <Text className="text-slate-900 font-bold text-sm font-outfit w-5 text-center">{quantity}</Text>
+                        <TouchableOpacity
+                            onPress={() => setQuantity(q => Math.min(10, q + 1))}
+                            className="bg-white w-7 h-7 rounded-lg items-center justify-center shadow-sm"
+                        >
+                            <Ionicons name="add" size={14} color="#334155" />
+                        </TouchableOpacity>
+                    </View>
+                    <Text className="text-slate-400 text-[10px] font-bold font-inter uppercase">{unit}</Text>
+                </View>
+
                 {/* Add to Cart Button */}
                 <TouchableOpacity
-                    onPress={onAddPress}
+                    onPress={() => onAddPress?.(quantity)}
                     className="bg-sky-200 py-2 rounded-xl mt-2 items-center active:bg-sky-300"
                 >
                     <Text className="text-sky-600 font-bold text-xs font-inter">Add to Cart</Text>

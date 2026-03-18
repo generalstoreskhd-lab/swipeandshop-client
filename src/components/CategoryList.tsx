@@ -11,6 +11,14 @@ const categories: { name: string; icon: keyof typeof Ionicons.glyphMap }[] = [
     { name: "Household", icon: "home-outline" },
 ];
 
+/**
+ * CategoryList Component
+ * Renders a horizontally scrollable row of category icons on the HomeScreen.
+ * Each category is represented by a `CategoryIcon` tile.
+ * Includes a "Categories" header with a "See All" link.
+ *
+ * Categories are currently hardcoded; they will be fetched from an API in the future.
+ */
 export default function CategoryList() {
     return (
         <View className="w-full mt-6 px-4">

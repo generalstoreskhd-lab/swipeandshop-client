@@ -2,11 +2,22 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+/**
+ * Props for the CategoryIcon component.
+ * @property icon - Ionicons glyph name (e.g., 'fast-food-outline')
+ * @property name - Category label displayed below the icon
+ */
 export type CategoryIconProps = {
     icon: keyof typeof Ionicons.glyphMap;
     name: string;
 }
 
+/**
+ * CategoryIcon Component
+ * A small circular icon tile representing a product category.
+ * Used inside `CategoryList` as a horizontally scrollable pill.
+ * Displays an Ionicon inside a sky-blue circle with a label below.
+ */
 export default function CategoryIcon({ icon, name }: CategoryIconProps) {
     return (
         <View className="flex flex-col items-center justify-center gap-y-2 w-20">

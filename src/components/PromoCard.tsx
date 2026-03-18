@@ -1,6 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
+/**
+ * PromoCard Component
+ * A visually rich promotional banner displayed on the HomeScreen.
+ * Features a bold sale headline, subtitle, and a "SHOP NOW" CTA button.
+ * Uses a decorative circular accent shape for depth.
+ * Shown only when the user is not logged in (controlled by HomeScreen).
+ */
 export const PromoCard = () => {
     return (
         <View className="w-full bg-sky-300 rounded-2xl overflow-hidden p-6 relative">
