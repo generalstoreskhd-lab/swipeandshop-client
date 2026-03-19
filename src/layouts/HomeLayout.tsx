@@ -7,6 +7,7 @@ interface HomeLayoutProps {
     children: React.ReactNode;
     scrollable?: boolean;
     showSearch?: boolean;
+    showBadge?: boolean;
 }
 
 /**
@@ -17,7 +18,7 @@ interface HomeLayoutProps {
  * @param scrollable - Whether the content should be wrapped in a ScrollView
  * @param showSearch - Whether to show the search bar in the Topbar
  */
-export default function HomeLayout({ children, scrollable = true, showSearch = true }: HomeLayoutProps) {
+export default function HomeLayout({ children, scrollable = true, showSearch = true, showBadge = true }: HomeLayoutProps) {
     const isLoggedIn = false; // Mock login state
 
     return (
@@ -29,13 +30,13 @@ export default function HomeLayout({ children, scrollable = true, showSearch = t
                         contentContainerStyle={{ paddingBottom: 100 }}
                         stickyHeaderIndices={[0]}
                     >
-                        <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} />
+                        <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} showBadge={showBadge} />
                         {children}
                     </ScrollView>
                 </View>
             ) : (
                 <View className="flex-1 w-full">
-                    <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} />
+                    <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} showBadge={showBadge} />
                     <View className="flex-1 w-full" style={{ paddingBottom: 100 }}>
                         {children}
                     </View>

@@ -4,6 +4,9 @@ import { Image } from 'expo-image';
 
 import logo from "../assets/images/logo.png";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AppStackParamList } from "../navigation/AppNavigator";
 
 /**
  * Props for the Topbar component.
@@ -15,6 +18,7 @@ interface TopbarProps {
     isLoggedIn: boolean;
     userName?: string;
     showSearch?: boolean;
+    showBadge?: boolean;
 }
 
 /**
@@ -27,14 +31,29 @@ interface TopbarProps {
  * Optionally renders a search bar with live query state and a clear button.
  * Uses `z-[1000]` to stay above all stacked content (e.g., swipe cards).
  */
-export default function Topbar({ isLoggedIn, userName, showSearch = true }: TopbarProps) {
+export default function Topbar({ isLoggedIn, userName, showSearch = true, showBadge = true }: TopbarProps) {
     const [searchQuery, setSearchQuery] = useState("");
+    const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+    
+    // Check if we can go back and if we are on the Notifications screen
+    const canGoBack = navigation.canGoBack();
+    const routeName = useNavigationState((state) => state?.routes[state.index]?.name);
+    const isNotifications = routeName === 'Notifications';
 
     return (
         <View className="w-full bg-white border-b border-slate-100 p-4 pt-8 z-[1000]">
             {/* First Row: Brand and Actions */}
             <View className="flex-row items-center justify-between mb-3">
                 <View className="flex-row items-center flex-1">
+                    {canGoBack && isNotifications ? (
+                        <Pressable 
+                            onPress={() => navigation.goBack()}
+                            className="p-2 bg-slate-50 rounded-full mr-3"
+                        >
+                            <Ionicons name="arrow-back" size={24} color="#1e293b" />
+                        </Pressable>
+                    ) : null}
+
                     {isLoggedIn ? (
                         <View className="flex-col">
                             <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-inter">Welcome back</Text>
@@ -42,7 +61,7 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true }: Topb
                         </View>
                     ) : (
                         <View className="flex-row items-center flex-none">
-                            <View className="w-24 h-24  rounded-xl items-center justify-center mr-3 overflow-hidden">
+                            <View className="w-12 h-12 rounded-xl items-center justify-center mr-3 overflow-hidden">
                                 <Image
                                     source={logo}
                                     className="w-full h-full"
@@ -50,19 +69,23 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true }: Topb
                                 />
                             </View>
 
-
                             <View className="flex-col">
                                 <Text className="text-lg font-bold text-slate-900 leading-tight font-outfit">Swipe & Shop</Text>
                             </View>
                         </View>
-
                     )}
                 </View>
 
                 <View className="flex-row items-center gap-x-3">
-                    <View className="p-2 bg-slate-50 rounded-full">
+                    <Pressable 
+                        onPress={() => navigation.navigate('Notifications')}
+                        className="p-2 bg-slate-50 rounded-full relative"
+                    >
                         <Ionicons name="notifications-outline" size={22} color="#1e293b" />
-                    </View>
+                        {showBadge && (
+                            <View className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
+                        )}
+                    </Pressable>
                     <View className="p-2 bg-slate-50 rounded-full">
                         <Ionicons name="cart-outline" size={22} color="#1e293b" />
                     </View>
