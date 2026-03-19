@@ -4,13 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import OrdersScreen from '../screens/OrdersScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import PreferencesScreen from '../screens/PreferencesScreen';
 
 export type MainTabParamList = {
     Home: undefined;
     Swipe: undefined;
     Orders: undefined;
-    Profile: undefined;
+    Preferences: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -29,8 +29,8 @@ export default function MainTabNavigator() {
                         iconName = focused ? 'flame' : 'flame-outline';
                     } else if (route.name === 'Orders') {
                         iconName = focused ? 'cart' : 'cart-outline';
-                    } else if (route.name === 'Profile') {
-                        iconName = focused ? 'person' : 'person-outline';
+                    } else if (route.name === 'Preferences') {
+                        iconName = focused ? 'settings' : 'settings-outline';
                     } else {
                         iconName = 'help-outline';
                     }
@@ -56,7 +56,7 @@ export default function MainTabNavigator() {
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Swipe" component={BrowseScreen} />
             <Tab.Screen name="Orders" component={OrdersScreen} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Preferences" component={PreferencesScreen} />
         </Tab.Navigator>
     );
 }
