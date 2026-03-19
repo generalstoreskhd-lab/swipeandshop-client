@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import HomeLayout from '../layouts/HomeLayout';
 import NotificationCard, { NotificationCardProps } from '../components/NotificationCard';
 
