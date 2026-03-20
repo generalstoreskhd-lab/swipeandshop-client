@@ -66,6 +66,9 @@ const INITIAL_NOTIFICATIONS: NotificationCardProps[] = [
     },
 ];
 
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { markAllAsRead, clearAll, restoreDummyData } from '../store/slices/notificationsSlice';
+
 /**
  * NotificationsScreen
  *
@@ -73,18 +76,17 @@ const INITIAL_NOTIFICATIONS: NotificationCardProps[] = [
  * action in the header. Uses the shared HomeLayout with search hidden.
  */
 export default function NotificationsScreen() {
-    const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
+    const dispatch = useAppDispatch();
+    const notifications = useAppSelector((state) => state.notifications.items);
 
-    const unreadCount = notifications.filter((n) => !n.isRead).length;
+    const unreadCount = notifications.filter((n: any) => !n.isRead).length;
 
     const handleMarkAllRead = () => {
-        setNotifications((prev) =>
-            prev.map((n) => ({ ...n, isRead: true }))
-        );
+        dispatch(markAllAsRead());
     };
 
     const handleClearAll = () => {
-        setNotifications([]);
+        dispatch(clearAll());
     };
 
     return (
@@ -119,7 +121,7 @@ export default function NotificationsScreen() {
 
             {/* Notification List or Empty State */}
             {notifications.length > 0 ? (
-                notifications.map((notification, index) => (
+                notifications.map((notification: any, index: number) => (
                     <NotificationCard key={index} {...notification} />
                 ))
             ) : (
@@ -134,7 +136,7 @@ export default function NotificationsScreen() {
                         You have no new notifications. We'll let you know when something exciting happens.
                     </Text>
                     <TouchableOpacity 
-                        onPress={() => setNotifications(INITIAL_NOTIFICATIONS)}
+                        onPress={() => dispatch(restoreDummyData())}
                         className="bg-slate-900 px-8 py-3 rounded-full"
                     >
                         <Text className="text-white font-bold font-inter text-sm">

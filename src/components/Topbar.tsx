@@ -31,21 +31,27 @@ interface TopbarProps {
  * Optionally renders a search bar with live query state and a clear button.
  * Uses `z-[1000]` to stay above all stacked content (e.g., swipe cards).
  */
-export default function Topbar({ isLoggedIn, userName, showSearch = true, showBadge = true }: TopbarProps) {
+import { useAppSelector } from "../store/hooks";
+
+export default function Topbar({ isLoggedIn, userName: propUserName, showSearch = true, showBadge = true }: TopbarProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
     
+    const user = useAppSelector((state) => state.auth.user);
+    const userName = propUserName || user?.name || 'User';
+
     // Check if we can go back and if we are on the Notifications screen
     const canGoBack = navigation.canGoBack();
     const routeName = useNavigationState((state) => state?.routes[state.index]?.name);
     const isNotifications = routeName === 'Notifications';
+    const isCart = routeName === 'Cart';
 
     return (
         <View className="w-full bg-white border-b border-slate-100 p-4 pt-8 z-[1000]">
             {/* First Row: Brand and Actions */}
             <View className="flex-row items-center justify-between mb-3">
                 <View className="flex-row items-center flex-1">
-                    {canGoBack && isNotifications ? (
+                    {canGoBack && (isNotifications || isCart) ? (
                         <Pressable 
                             onPress={() => navigation.goBack()}
                             className="p-2 bg-slate-50 rounded-full mr-3"
@@ -57,7 +63,7 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true, showBa
                     {isLoggedIn ? (
                         <View className="flex-col">
                             <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-inter">Welcome back</Text>
-                            <Text className="text-xl font-bold text-slate-900 font-outfit">Hello {userName || 'User'}</Text>
+                            <Text className="text-xl font-bold text-slate-900 font-outfit">Hello {userName}</Text>
                         </View>
                     ) : (
                         <View className="flex-row items-center flex-none">
@@ -86,9 +92,12 @@ export default function Topbar({ isLoggedIn, userName, showSearch = true, showBa
                             <View className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
                         )}
                     </Pressable>
-                    <View className="p-2 bg-slate-50 rounded-full">
+                    <Pressable 
+                        onPress={() => navigation.navigate('Cart')}
+                        className="p-2 bg-slate-50 rounded-full"
+                    >
                         <Ionicons name="cart-outline" size={22} color="#1e293b" />
-                    </View>
+                    </Pressable>
                 </View>
             </View>
 

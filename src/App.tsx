@@ -14,6 +14,9 @@ import { useCallback } from 'react';
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
+import { Provider } from 'react-redux';
+import { store } from './store';
+
 function App() {
     const [fontsLoaded, fontError] = useFonts({
         Inter_400Regular,
@@ -37,13 +40,15 @@ function App() {
     }
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
-            <SafeAreaProvider>
-                <NavigationContainer>
-                    <AppNavigator />
-                </NavigationContainer>
-            </SafeAreaProvider>
-        </GestureHandlerRootView>
+        <Provider store={store}>
+            <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
+                <SafeAreaProvider>
+                    <NavigationContainer>
+                        <AppNavigator />
+                    </NavigationContainer>
+                </SafeAreaProvider>
+            </GestureHandlerRootView>
+        </Provider>
     );
 }
 

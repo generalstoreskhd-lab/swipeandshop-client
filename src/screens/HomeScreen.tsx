@@ -5,6 +5,8 @@ import { PromoCard } from "../components/PromoCard";
 import CategoryList from "../components/CategoryList";
 import NewArrivals from "../components/NewArrivals";
 
+import { useAppSelector } from "../store/hooks";
+
 /**
  * HomeScreen Component
  * The app's landing page. Composes three sections:
@@ -16,7 +18,7 @@ import NewArrivals from "../components/NewArrivals";
  */
 export default function HomeScreen() {
 
-    const isLoggedIn = false;
+    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
 
     return (
