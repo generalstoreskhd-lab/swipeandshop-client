@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Text, View, TextInput, Pressable } from "react-native";
 import { Image } from 'expo-image';
 
@@ -7,6 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../navigation/AppNavigator";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { setSearchQuery } from "../store/slices/productsSlice";
 
 /**
  * Props for the Topbar component.
@@ -23,24 +24,18 @@ interface TopbarProps {
 
 /**
  * Topbar Component
- * The app's primary navigation header. Renders two layouts:
- * - **Logged-out**: Brand logo + "Swipe & Shop" title
- * - **Logged-in**: Personalized greeting with the user's name
- *
- * Always includes notification and cart action icons.
- * Optionally renders a search bar with live query state and a clear button.
- * Uses `z-[1000]` to stay above all stacked content (e.g., swipe cards).
+ * The app's primary navigation header. Renders brand logo/greeting and notification/cart icons.
+ * Features a global search bar connected to Redux for real-time product filtering.
  */
-import { useAppSelector } from "../store/hooks";
-
 export default function Topbar({ isLoggedIn, userName: propUserName, showSearch = true, showBadge = true }: TopbarProps) {
-    const [searchQuery, setSearchQuery] = useState("");
+    const dispatch = useAppDispatch();
+    const searchQuery = useAppSelector((state) => state.products.searchQuery);
     const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
     
     const user = useAppSelector((state) => state.auth.user);
     const userName = propUserName || user?.name || 'User';
 
-    // Check if we can go back and if we are on the Notifications screen
+    // Navigation state helpers
     const canGoBack = navigation.canGoBack();
     const routeName = useNavigationState((state) => state?.routes[state.index]?.name);
     const isNotifications = routeName === 'Notifications';
@@ -103,17 +98,17 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
 
             {/* Second Row: Search */}
             {showSearch && (
-                <View className="flex-row items-center bg-slate-50 rounded-2xl px-4 py-3 border border-slate-100">
+                <View className="flex-row items-center bg-slate-50 rounded-2xl px-4 py-3 border border-slate-100 shadow-inner">
                     <Ionicons name="search-outline" size={20} color="#64748b" />
                     <TextInput
                         placeholder="Search products..."
-                        className="ml-3 flex-1 text-slate-900 text-sm font-medium font-inter"
+                        className="ml-3 flex-1 text-slate-900 text-sm font-medium font-inter h-full"
                         placeholderTextColor="#94a3b8"
                         value={searchQuery}
-                        onChangeText={setSearchQuery}
+                        onChangeText={(text) => dispatch(setSearchQuery(text))}
                     />
                     {searchQuery.length > 0 && (
-                        <Pressable onPress={() => setSearchQuery("")} className="ml-2">
+                        <Pressable onPress={() => dispatch(setSearchQuery(""))} className="ml-2">
                             <Ionicons name="close-circle" size={18} color="#94a3b8" />
                         </Pressable>
                     )}

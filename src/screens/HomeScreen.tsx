@@ -1,35 +1,42 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import HomeLayout from "../layouts/HomeLayout";
 import { PromoCard } from "../components/PromoCard";
 import CategoryList from "../components/CategoryList";
 import NewArrivals from "../components/NewArrivals";
+import BrowseProducts from "../components/BrowseProducts";
 
 import { useAppSelector } from "../store/hooks";
 
 /**
  * HomeScreen Component
- * The app's landing page. Composes three sections:
+ * The app's landing page. Composes several sections:
  * 1. **CategoryList** — Horizontally scrollable category icons
  * 2. **PromoCard** — Seasonal sale banner (hidden when logged in)
  * 3. **NewArrivals** — 2-column product grid
+ * 4. **BrowseProducts** — Full vertical product list with sorting
  *
- * Wrapped in `HomeLayout` for consistent Topbar and scrolling behavior.
+ * During search, only BrowseProducts is shown to display results.
  */
 export default function HomeScreen() {
-
     const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-
+    const searchQuery = useAppSelector((state) => state.products.searchQuery);
+    const isSearching = searchQuery.length > 0;
 
     return (
         <HomeLayout>
-            <CategoryList />
-            {!isLoggedIn && (
-                <View className="w-full px-4 mt-4">
-                    <PromoCard />
-                </View>
+            {!isSearching && (
+                <>
+                    <CategoryList />
+                    {!isLoggedIn && (
+                        <View className="w-full px-4 mt-4">
+                            <PromoCard />
+                        </View>
+                    )}
+                    <NewArrivals />
+                </>
             )}
-            <NewArrivals />
+            <BrowseProducts />
         </HomeLayout>
     );
 }

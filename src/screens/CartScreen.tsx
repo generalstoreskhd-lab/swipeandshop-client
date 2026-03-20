@@ -132,8 +132,6 @@ export default function CartScreen() {
     );
 }
 
-}
-
 function SummaryRow({ label, value }: { label: string; value: number }) {
     return (
         <View className="flex-row justify-between items-center">
