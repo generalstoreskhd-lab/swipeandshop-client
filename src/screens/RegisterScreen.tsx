@@ -12,13 +12,20 @@ import logo from "../assets/images/logo.png";
 import { RegisterLayout } from "../layouts/RegisterLayout";
 import CustomPresseableText from "../components/CustomPresseable";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/Rootnavigation";
+import { RootStackParamList } from "../navigation/RootNavigation";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { skipAuth } from "../store/slices/authSlice";
+import { translations } from "../constants/translations";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 export default function RegisterScreen({ navigation }: Props) {
+    const dispatch = useAppDispatch();
+    const { language } = useAppSelector((state) => state.settings);
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
+
+    const t = translations[language];
 
     const handleContinue = () => {
         if (phone.replace(/\D/g, "").length < 10) {
@@ -33,15 +40,15 @@ export default function RegisterScreen({ navigation }: Props) {
             <View className="flex-1 w-full px-4 py-6 flex-col justify-between items-center">
 
                 {/* Top bar: logo + skip */}
-                <View className="w-full flex-row items-center justify-between">
+                <View className="w-full flex-row items-center justify-between mt-4">
                     <Image
                         source={logo}
                         accessibilityLabel="brand-logo"
-                        className="h-24 w-24"
+                        style={{ width: 80, height: 80 }}
                         resizeMode="contain"
                     />
-                    <Pressable onPress={() => { }}>
-                        <Text className="text-sky-500 text-base font-medium">Skip</Text>
+                    <Pressable onPress={() => dispatch(skipAuth())}>
+                        <Text className="text-sky-500 text-base font-medium">{t.skip}</Text>
                     </Pressable>
                 </View>
 
@@ -79,7 +86,7 @@ export default function RegisterScreen({ navigation }: Props) {
                     <CustomPresseableText
                         stretch={true}
                         onPress={handleContinue}
-                        text="Continue"
+                        text={t.continue}
                     />
                 </View>
 

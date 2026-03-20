@@ -22,8 +22,7 @@ interface NotificationsState {
   items: Notification[];
 }
 
-const initialState: NotificationsState = {
-  items: [
+const DUMMY_NOTIFICATIONS: Notification[] = [
     {
         type: 'order',
         title: 'Order #8829\nShipped',
@@ -82,7 +81,10 @@ const initialState: NotificationsState = {
         timeAgo: '5d ago',
         isRead: true,
     },
-  ],
+];
+
+const initialState: NotificationsState = {
+  items: [],
 };
 
 const notificationsSlice = createSlice({
@@ -106,7 +108,7 @@ const notificationsSlice = createSlice({
       state.items = [];
     },
     restoreDummyData: (state) => {
-        state.items = initialState.items;
+        state.items = DUMMY_NOTIFICATIONS;
     }
   },
 });

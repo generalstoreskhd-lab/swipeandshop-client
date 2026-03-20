@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   isLoggedIn: boolean;
+  isGuest: boolean;
   user: {
     name: string;
     email?: string;
@@ -10,7 +11,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  isLoggedIn: false, // Default to false
+  isLoggedIn: false,
+  isGuest: false,
   user: null,
 };
 
@@ -20,6 +22,7 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<{ name: string; email?: string }>) => {
       state.isLoggedIn = true;
+      state.isGuest = false;
       state.user = {
         name: action.payload.name,
         email: action.payload.email,
@@ -27,7 +30,12 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.isLoggedIn = false;
+      state.isGuest = false;
       state.user = null;
+    },
+    skipAuth: (state) => {
+      state.isGuest = true;
+      state.isLoggedIn = false;
     },
     updateProfile: (state, action: PayloadAction<{ name?: string; email?: string }>) => {
       if (state.user) {
@@ -37,5 +45,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, updateProfile } = authSlice.actions;
+export const { login, logout, updateProfile, skipAuth } = authSlice.actions;
 export default authSlice.reducer;

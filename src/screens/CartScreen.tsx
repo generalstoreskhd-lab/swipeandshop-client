@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import HomeLayout from '../layouts/HomeLayout';
+import { useAppSelector } from '../store/hooks';
+import LoginRequired from '../components/LoginRequired';
+import { translations } from '../constants/translations';
 import CartItem, { CartItemProps } from '../components/CartItem';
 
 const INITIAL_CART_ITEMS: CartItemProps[] = [
@@ -35,12 +38,17 @@ const INITIAL_CART_ITEMS: CartItemProps[] = [
 /**
  * CartScreen Component
  * 
- * Displays the user's shopping cart with:
- * - A list of items (CartItem components)
- * - Order summary (Subtotal, Tax, Shipping)
- * - Checkout CTA button
+ * Reverted to original state (content visible without login check).
  */
 export default function CartScreen() {
+    const { isLoggedIn } = useAppSelector((state) => state.auth);
+    const { language } = useAppSelector((state) => state.settings);
+
+    if (!isLoggedIn) {
+        return <LoginRequired />;
+    }
+    
+    const t = translations[language];
     const [items, setItems] = useState(INITIAL_CART_ITEMS);
 
     const handleUpdateQuantity = (id: string, newQuantity: number) => {
@@ -61,10 +69,10 @@ export default function CartScreen() {
             {/* Header */}
             <View className="px-4 pt-2 pb-4">
                 <Text className="text-[10px] font-bold text-blue-500 uppercase tracking-widest font-inter mb-1">
-                    My Shopping Bag
+                    {t.myShoppingBag}
                 </Text>
                 <Text className="text-2xl font-bold text-slate-900 font-outfit">
-                    Cart ({items.length})
+                    {t.cart} ({items.length})
                 </Text>
             </View>
 
@@ -86,21 +94,21 @@ export default function CartScreen() {
 
                         {/* Order Summary Card */}
                         <View className="bg-white rounded-3xl p-5 mt-4 border border-slate-100 shadow-sm">
-                            <Text className="text-base font-bold text-slate-900 font-outfit mb-4">Order Summary</Text>
+                            <Text className="text-base font-bold text-slate-900 font-outfit mb-4">{t.orderSummary}</Text>
                             
                             <View className="gap-y-3">
-                                <SummaryRow label="Subtotal" value={subtotal} />
-                                <SummaryRow label="Shipping" value={shipping} />
-                                <SummaryRow label="Tax (8%)" value={tax} />
+                                <SummaryRow label={t.subtotal} value={subtotal} />
+                                <SummaryRow label={t.shipping} value={shipping} />
+                                <SummaryRow label={t.tax} value={tax} />
                                 <View className="h-[1px] bg-slate-50 w-full my-1" />
                                 <View className="flex-row justify-between items-center">
-                                    <Text className="text-lg font-bold text-slate-900 font-outfit">Total</Text>
+                                    <Text className="text-lg font-bold text-slate-900 font-outfit">{t.total}</Text>
                                     <Text className="text-xl font-bold text-blue-600 font-outfit">${total.toFixed(2)}</Text>
                                 </View>
                             </View>
 
                             <TouchableOpacity className="bg-slate-900 w-full py-4 rounded-2xl items-center mt-6 shadow-md shadow-slate-300">
-                                <Text className="text-white font-bold font-inter text-base">Proceed to Checkout</Text>
+                                <Text className="text-white font-bold font-inter text-base">{t.proceedToCheckout}</Text>
                             </TouchableOpacity>
                         </View>
                         
@@ -113,17 +121,17 @@ export default function CartScreen() {
                         <Ionicons name="cart-outline" size={48} color="#94a3b8" />
                     </View>
                     <Text className="text-xl font-bold text-slate-900 font-outfit text-center mb-2">
-                        Your cart is empty
+                        {t.cartEmpty}
                     </Text>
                     <Text className="text-sm text-slate-500 font-inter text-center leading-5 mb-8">
-                        Looks like you haven't added anything to your cart yet. Explore our latest arrivals!
+                        {t.cartEmptyDesc}
                     </Text>
                     <TouchableOpacity 
                         onPress={() => setItems(INITIAL_CART_ITEMS)}
                         className="bg-slate-900 px-8 py-3 rounded-full"
                     >
                         <Text className="text-white font-bold font-inter text-sm">
-                            Start Shopping
+                            {t.startShopping}
                         </Text>
                     </TouchableOpacity>
                 </View>

@@ -12,6 +12,10 @@ export type AppStackParamList = {
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
+/**
+ * AppNavigator Component
+ * Reverted to original state (MainTabs, Notifications, Cart only).
+ */
 export default function AppNavigator() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

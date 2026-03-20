@@ -53,6 +53,10 @@ const SWIPE_PRODUCTS = [
     }
 ];
 
+import { useAppSelector } from '../store/hooks';
+import LoginRequired from '../components/LoginRequired';
+import { translations } from '../constants/translations';
+
 /**
  * BrowseScreen Component
  * The main discovery interface of the app.
@@ -60,6 +64,15 @@ const SWIPE_PRODUCTS = [
  * Handles the 'Empty' state when all products have been swiped.
  */
 export default function BrowseScreen() {
+    const { isLoggedIn } = useAppSelector((state) => state.auth);
+    const { language } = useAppSelector((state) => state.settings);
+
+    if (!isLoggedIn) {
+        return <LoginRequired />;
+    }
+    
+    const t = translations[language];
+
     /** Track the current product being viewed */
     const [currentIndex, setCurrentIndex] = React.useState(0);
     const isEmpty = currentIndex >= SWIPE_PRODUCTS.length;
@@ -120,16 +133,16 @@ export default function BrowseScreen() {
                                 <Ionicons name="sparkles" size={60} color="#0ea5e9" />
                             </View>
                             <Text className="text-2xl font-bold text-slate-900 font-outfit text-center mb-2">
-                                You've Seen Everything!
+                                {t.seenEverything}
                             </Text>
                             <Text className="text-slate-500 font-inter text-center mb-8">
-                                Check back later for more amazing products curated just for you.
+                                {t.noMoreProducts}
                             </Text>
                             <TouchableOpacity
                                 className="bg-sky-500 px-8 py-4 rounded-2xl shadow-lg active:bg-sky-600"
                                 onPress={() => setCurrentIndex(0)}
                             >
-                                <Text className="text-white font-bold font-inter text-lg">Restart Discovery</Text>
+                                <Text className="text-white font-bold font-inter text-lg">{t.restartDiscovery}</Text>
                             </TouchableOpacity>
                         </View>
                     )}
