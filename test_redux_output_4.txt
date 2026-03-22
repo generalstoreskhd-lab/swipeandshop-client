@@ -1,0 +1,671 @@
+﻿  console.log
+    [dotenv@17.3.1] injecting env (7) from .env -- tip: ­ƒøá´©Å  run anywhere with `dotenvx run -- yourcommand`
+
+      at _log (node_modules/dotenv/lib/main.js:139:11)
+
+node.exe : FAIL src/co
+mponents/__tests__/Top
+bar.test.tsx
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : 
+NotSpecified: (F    
+AIL src/compon...Topb 
+   
+ar.test.tsx:String) [ 
+   ], RemoteException
+    + 
+FullyQualifiedError   
+ Id : 
+NativeCommandErr    or
+ 
+  Topbar
+    ├ù renders 
+correctly in logged 
+out state (81 ms)
+    ├ù renders 
+correctly in logged 
+in state (5 ms)
+    ├ù handles search 
+input and clear 
+button (4 ms)
+    ├ù hides search 
+bar when showSearch 
+is false (7 ms)
+
+  ÔùÅ Topbar ÔÇ║ 
+renders correctly in 
+logged out state
+
+    Couldn't get the 
+navigation state. Is 
+your component inside 
+a navigator?
+
+    [0m [90m 38 
+|[39m     [90m// 
+Navigation state 
+helpers[39m
+     [90m 39 |[39m  
+   [36mconst[39m 
+canGoBack [33m=[39m 
+navigation[33m.[39mc
+anGoBack()[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 40 |[39m     
+[36mconst[39m 
+routeName [33m=[39m 
+useNavigationState((st
+ate) [33m=>[39m stat
+e[33m?[39m[33m.[39
+mroutes[state[33m.[3
+9mindex][33m?[39m[3
+3m.[39mname)[33m;[3
+9m
+     [90m    |[39m  
+                      
+                 
+[31m[1m^[22m[39m
+     [90m 41 |[39m  
+   [36mconst[39m 
+isNotifications 
+[33m=[39m routeName 
+[33m===[39m [32m'No
+tifications'[39m[33m
+;[39m
+     [90m 42 |[39m  
+   [36mconst[39m 
+isCart [33m=[39m 
+routeName 
+[33m===[39m [32m'Ca
+rt'[39m[33m;[39m
+     [90m 43 
+|[39m[0m
+
+      at 
+useNavigationState (no
+de_modules/@react-navi
+gation/core/src/useNav
+igationState.tsx:21:11
+)
+      at Topbar (src/c
+omponents/Topbar.tsx:4
+0:41)
+      at Object.react_
+stack_bottom_frame (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:15670:20)
+      at 
+renderWithHooks (node_
+modules/react-test-ren
+derer/cjs/react-test-r
+enderer.development.js
+:4863:22)
+      at updateFunctio
+nComponent (node_modul
+es/react-test-renderer
+/cjs/react-test-render
+er.development.js:7018
+:19)
+      at beginWork (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:8499:18)
+      at 
+runWithFiberInDEV (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:2315:13)
+      at 
+performUnitOfWork (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:13224:22)
+      at workLoopSync 
+(node_modules/react-te
+st-renderer/cjs/react-
+test-renderer.developm
+ent.js:13068:41)
+      at 
+renderRootSync (node_m
+odules/react-test-rend
+erer/cjs/react-test-re
+nderer.development.js:
+13049:11)
+      at 
+performWorkOnRoot (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:12253:39)
+      at performWorkOn
+RootViaSchedulerTask (
+node_modules/react-tes
+t-renderer/cjs/react-t
+est-renderer.developme
+nt.js:2908:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:590:34)
+      at process.env.N
+ODE_ENV.exports.act (n
+ode_modules/react/cjs/
+react.development.js:8
+84:10)
+      at 
+actImplementation (nod
+e_modules/@testing-lib
+rary/react-native/src/
+act.ts:30:25)
+      at 
+renderWithAct (node_mo
+dules/@testing-library
+/react-native/src/rend
+er-act.ts:13:11)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:69:33)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:44:10)
+      at 
+renderWithProvider (sr
+c/components/__tests__
+/Topbar.test.tsx:9:16)
+      at Object.render
+WithProvider (src/comp
+onents/__tests__/Topba
+r.test.tsx:21:5)
+
+  ÔùÅ Topbar ÔÇ║ 
+renders correctly in 
+logged in state
+
+    Couldn't get the 
+navigation state. Is 
+your component inside 
+a navigator?
+
+    [0m [90m 38 
+|[39m     [90m// 
+Navigation state 
+helpers[39m
+     [90m 39 |[39m  
+   [36mconst[39m 
+canGoBack [33m=[39m 
+navigation[33m.[39mc
+anGoBack()[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 40 |[39m     
+[36mconst[39m 
+routeName [33m=[39m 
+useNavigationState((st
+ate) [33m=>[39m stat
+e[33m?[39m[33m.[39
+mroutes[state[33m.[3
+9mindex][33m?[39m[3
+3m.[39mname)[33m;[3
+9m
+     [90m    |[39m  
+                      
+                 
+[31m[1m^[22m[39m
+     [90m 41 |[39m  
+   [36mconst[39m 
+isNotifications 
+[33m=[39m routeName 
+[33m===[39m [32m'No
+tifications'[39m[33m
+;[39m
+     [90m 42 |[39m  
+   [36mconst[39m 
+isCart [33m=[39m 
+routeName 
+[33m===[39m [32m'Ca
+rt'[39m[33m;[39m
+     [90m 43 
+|[39m[0m
+
+      at 
+useNavigationState (no
+de_modules/@react-navi
+gation/core/src/useNav
+igationState.tsx:21:11
+)
+      at Topbar (src/c
+omponents/Topbar.tsx:4
+0:41)
+      at Object.react_
+stack_bottom_frame (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:15670:20)
+      at 
+renderWithHooks (node_
+modules/react-test-ren
+derer/cjs/react-test-r
+enderer.development.js
+:4863:22)
+      at updateFunctio
+nComponent (node_modul
+es/react-test-renderer
+/cjs/react-test-render
+er.development.js:7018
+:19)
+      at beginWork (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:8499:18)
+      at 
+runWithFiberInDEV (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:2315:13)
+      at 
+performUnitOfWork (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:13224:22)
+      at workLoopSync 
+(node_modules/react-te
+st-renderer/cjs/react-
+test-renderer.developm
+ent.js:13068:41)
+      at 
+renderRootSync (node_m
+odules/react-test-rend
+erer/cjs/react-test-re
+nderer.development.js:
+13049:11)
+      at 
+performWorkOnRoot (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:12253:39)
+      at performWorkOn
+RootViaSchedulerTask (
+node_modules/react-tes
+t-renderer/cjs/react-t
+est-renderer.developme
+nt.js:2908:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:590:34)
+      at process.env.N
+ODE_ENV.exports.act (n
+ode_modules/react/cjs/
+react.development.js:8
+84:10)
+      at 
+actImplementation (nod
+e_modules/@testing-lib
+rary/react-native/src/
+act.ts:30:25)
+      at 
+renderWithAct (node_mo
+dules/@testing-library
+/react-native/src/rend
+er-act.ts:13:11)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:69:33)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:44:10)
+      at 
+renderWithProvider (sr
+c/components/__tests__
+/Topbar.test.tsx:9:16)
+      at Object.render
+WithProvider (src/comp
+onents/__tests__/Topba
+r.test.tsx:28:5)
+
+  ÔùÅ Topbar ÔÇ║ 
+handles search input 
+and clear button
+
+    Couldn't get the 
+navigation state. Is 
+your component inside 
+a navigator?
+
+    [0m [90m 38 
+|[39m     [90m// 
+Navigation state 
+helpers[39m
+     [90m 39 |[39m  
+   [36mconst[39m 
+canGoBack [33m=[39m 
+navigation[33m.[39mc
+anGoBack()[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 40 |[39m     
+[36mconst[39m 
+routeName [33m=[39m 
+useNavigationState((st
+ate) [33m=>[39m stat
+e[33m?[39m[33m.[39
+mroutes[state[33m.[3
+9mindex][33m?[39m[3
+3m.[39mname)[33m;[3
+9m
+     [90m    |[39m  
+                      
+                 
+[31m[1m^[22m[39m
+     [90m 41 |[39m  
+   [36mconst[39m 
+isNotifications 
+[33m=[39m routeName 
+[33m===[39m [32m'No
+tifications'[39m[33m
+;[39m
+     [90m 42 |[39m  
+   [36mconst[39m 
+isCart [33m=[39m 
+routeName 
+[33m===[39m [32m'Ca
+rt'[39m[33m;[39m
+     [90m 43 
+|[39m[0m
+
+      at 
+useNavigationState (no
+de_modules/@react-navi
+gation/core/src/useNav
+igationState.tsx:21:11
+)
+      at Topbar (src/c
+omponents/Topbar.tsx:4
+0:41)
+      at Object.react_
+stack_bottom_frame (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:15670:20)
+      at 
+renderWithHooks (node_
+modules/react-test-ren
+derer/cjs/react-test-r
+enderer.development.js
+:4863:22)
+      at updateFunctio
+nComponent (node_modul
+es/react-test-renderer
+/cjs/react-test-render
+er.development.js:7018
+:19)
+      at beginWork (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:8499:18)
+      at 
+runWithFiberInDEV (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:2315:13)
+      at 
+performUnitOfWork (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:13224:22)
+      at workLoopSync 
+(node_modules/react-te
+st-renderer/cjs/react-
+test-renderer.developm
+ent.js:13068:41)
+      at 
+renderRootSync (node_m
+odules/react-test-rend
+erer/cjs/react-test-re
+nderer.development.js:
+13049:11)
+      at 
+performWorkOnRoot (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:12253:39)
+      at performWorkOn
+RootViaSchedulerTask (
+node_modules/react-tes
+t-renderer/cjs/react-t
+est-renderer.developme
+nt.js:2908:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:590:34)
+      at process.env.N
+ODE_ENV.exports.act (n
+ode_modules/react/cjs/
+react.development.js:8
+84:10)
+      at 
+actImplementation (nod
+e_modules/@testing-lib
+rary/react-native/src/
+act.ts:30:25)
+      at 
+renderWithAct (node_mo
+dules/@testing-library
+/react-native/src/rend
+er-act.ts:13:11)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:69:33)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:44:10)
+      at 
+renderWithProvider (sr
+c/components/__tests__
+/Topbar.test.tsx:9:16)
+      at Object.render
+WithProvider (src/comp
+onents/__tests__/Topba
+r.test.tsx:35:5)
+
+  ÔùÅ Topbar ÔÇ║ 
+hides search bar when 
+showSearch is false
+
+    Couldn't get the 
+navigation state. Is 
+your component inside 
+a navigator?
+
+    [0m [90m 38 
+|[39m     [90m// 
+Navigation state 
+helpers[39m
+     [90m 39 |[39m  
+   [36mconst[39m 
+canGoBack [33m=[39m 
+navigation[33m.[39mc
+anGoBack()[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 40 |[39m     
+[36mconst[39m 
+routeName [33m=[39m 
+useNavigationState((st
+ate) [33m=>[39m stat
+e[33m?[39m[33m.[39
+mroutes[state[33m.[3
+9mindex][33m?[39m[3
+3m.[39mname)[33m;[3
+9m
+     [90m    |[39m  
+                      
+                 
+[31m[1m^[22m[39m
+     [90m 41 |[39m  
+   [36mconst[39m 
+isNotifications 
+[33m=[39m routeName 
+[33m===[39m [32m'No
+tifications'[39m[33m
+;[39m
+     [90m 42 |[39m  
+   [36mconst[39m 
+isCart [33m=[39m 
+routeName 
+[33m===[39m [32m'Ca
+rt'[39m[33m;[39m
+     [90m 43 
+|[39m[0m
+
+      at 
+useNavigationState (no
+de_modules/@react-navi
+gation/core/src/useNav
+igationState.tsx:21:11
+)
+      at Topbar (src/c
+omponents/Topbar.tsx:4
+0:41)
+      at Object.react_
+stack_bottom_frame (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:15670:20)
+      at 
+renderWithHooks (node_
+modules/react-test-ren
+derer/cjs/react-test-r
+enderer.development.js
+:4863:22)
+      at updateFunctio
+nComponent (node_modul
+es/react-test-renderer
+/cjs/react-test-render
+er.development.js:7018
+:19)
+      at beginWork (no
+de_modules/react-test-
+renderer/cjs/react-tes
+t-renderer.development
+.js:8499:18)
+      at 
+runWithFiberInDEV (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:2315:13)
+      at 
+performUnitOfWork (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:13224:22)
+      at workLoopSync 
+(node_modules/react-te
+st-renderer/cjs/react-
+test-renderer.developm
+ent.js:13068:41)
+      at 
+renderRootSync (node_m
+odules/react-test-rend
+erer/cjs/react-test-re
+nderer.development.js:
+13049:11)
+      at 
+performWorkOnRoot (nod
+e_modules/react-test-r
+enderer/cjs/react-test
+-renderer.development.
+js:12253:39)
+      at performWorkOn
+RootViaSchedulerTask (
+node_modules/react-tes
+t-renderer/cjs/react-t
+est-renderer.developme
+nt.js:2908:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:590:34)
+      at process.env.N
+ODE_ENV.exports.act (n
+ode_modules/react/cjs/
+react.development.js:8
+84:10)
+      at 
+actImplementation (nod
+e_modules/@testing-lib
+rary/react-native/src/
+act.ts:30:25)
+      at 
+renderWithAct (node_mo
+dules/@testing-library
+/react-native/src/rend
+er-act.ts:13:11)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:69:33)
+      at 
+renderInternal (node_m
+odules/@testing-librar
+y/react-native/src/ren
+der.tsx:44:10)
+      at 
+renderWithProvider (sr
+c/components/__tests__
+/Topbar.test.tsx:9:16)
+      at Object.render
+WithProvider (src/comp
+onents/__tests__/Topba
+r.test.tsx:45:5)
+
+Test Suites: 1 
+failed, 1 total
+Tests:       4 
+failed, 4 total
+Snapshots:   0 total
+Time:        2.306 s, 
+estimated 3 s
+Ran all test suites 
+matching src/component
+s/__tests__/Topbar.tes
+t.tsx.

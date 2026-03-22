@@ -13,7 +13,7 @@ const mockProduct = {
 describe('ProductCard', () => {
   it('renders product information correctly', () => {
     render(
-      <ProductCard 
+      <ProductCard
         image={mockProduct.image}
         category={mockProduct.category}
         name={mockProduct.name}
@@ -21,24 +21,12 @@ describe('ProductCard', () => {
         rating={mockProduct.rating}
       />
     );
-    
+
     expect(screen.getByText('ELECTRONICS')).toBeTruthy();
     expect(screen.getByText('Test Product')).toBeTruthy();
     expect(screen.getByText('$99.99')).toBeTruthy();
     expect(screen.getByText('4.5')).toBeTruthy();
   });
 
-  it('calls onAddPress when Add to Cart is pressed', () => {
-    const onAddPress = jest.fn();
-    render(
-      <ProductCard 
-        {...mockProduct}
-        onAddPress={onAddPress}
-      />
-    );
-    
-    // Custom fireEvent if needed, or find by text
-    // fireEvent.press(screen.getByText('Add to Cart'));
-    // expect(onAddPress).toHaveBeenCalled();
-  });
+
 });

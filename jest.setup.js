@@ -1,4 +1,6 @@
+require('dotenv').config();
 // import '@testing-library/jest-native/extend-expect';
+
 
 // Mock Ionicons
 jest.mock('@expo/vector-icons', () => ({
