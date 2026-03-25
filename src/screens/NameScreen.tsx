@@ -22,29 +22,33 @@ export default function NameScreen({ navigation }: Props) {
     return (
         <RegisterLayout>
             <View className="flex-1 w-full px-4 py-6 flex-col justify-start items-center">
-                {/* Top bar: logo + skip */}
-                <View className="w-full flex-row items-center justify-between mt-4 mb-4">
+                {/* Top bar: logo */}
+                <View className="w-full flex-row items-center justify-start mt-4 mb-4">
                     <Image
                         source={logo}
                         accessibilityLabel="brand-logo"
                         style={{ width: 80, height: 80 }}
                         resizeMode="contain"
                     />
-                    <Pressable onPress={() => dispatch(skipAuth())}>
-                        <Text className="text-sky-500 text-base font-medium">{t.skip}</Text>
-                    </Pressable>
                 </View>
 
-                <View className="w-full flex-col items-center flex-1 justify-center gap-y-4">
-                    <Text className="text-3xl font-bold text-slate-900 mb-4 text-center">{t.whatShouldWeCallYou}</Text>
-                    <View className="w-full flex flex-col gap-y-2">
-                        <Text className="text-sm font-semibold text-slate-500 ml-1">{t.fullName}</Text>
+                <View className="w-full flex-col items-center flex-1 justify-center gap-y-6 pb-20">
+                    <View className="w-full mb-6">
+                        <Text className="text-4xl font-semibold text-slate-950 text-center">{t.whatShouldWeCallYou}</Text>
+                        <Text className="text-base mt-3 font-light text-slate-600 text-center">Tell us your name so we can personalize your experience</Text>
+                    </View>
+
+                    <View className="w-full flex flex-col gap-y-2 mb-6">
+                        <Text className="text-sm font-semibold text-slate-500 ml-2">{t.fullName}</Text>
                         <TextInput
                             placeholder={t.enterName}
-                            className={`${error ? "border-red-400" : "border-slate-200"} border-2 border-slate-200 rounded-xl px-4 py-3 w-full`}
+                            placeholderTextColor="#94a3b8"
+                            className={`${error ? "border-red-400" : "border-slate-200"} bg-white border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900`}
                         />
                     </View>
-                {error && <Text className="text-red-500">{error}</Text>}
+
+                    {error ? <Text className="w-full text-left text-sm text-red-500 mb-2">{error}</Text> : null}
+
                     <CustomPresseableText
                         stretch={true}
                         onPress={() => navigation.navigate("Address")}

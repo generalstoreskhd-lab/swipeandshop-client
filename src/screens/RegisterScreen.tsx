@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
+    ActivityIndicator,
     Button,
     Image,
     Pressable,
@@ -7,6 +8,9 @@ import {
     TextInput,
     View,
 } from "react-native";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { signInWithPhoneNumber } from "firebase/auth";
+import app, { auth } from "../config/firebaseConfig";
 
 import logo from "../assets/images/logo.png";
 import { RegisterLayout } from "../layouts/RegisterLayout";
@@ -22,21 +26,48 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 export default function RegisterScreen({ navigation }: Props) {
     const dispatch = useAppDispatch();
     const { language } = useAppSelector((state) => state.settings);
+    const [countryCode, setCountryCode] = useState("+91");
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+    const recaptchaVerifier = useRef(null);
 
     const t = translations[language];
 
-    const handleContinue = () => {
-        if (phone.replace(/\D/g, "").length < 10) {
-            setError("Please enter a valid phone number.");
+    const handleContinue = async () => {
+        const cleanPhone = phone.replace(/[^\d]/g, "");
+        const code = countryCode.startsWith("+") ? countryCode : `+${countryCode.replace(/[^\d]/g, "")}`;
+        const phoneNumber = `${code}${cleanPhone}`;
+        if (phoneNumber.length < 10) {
+            setError("Please enter a valid phone number with country code.");
             return;
         }
-        navigation.navigate("Verify");
+
+        setIsLoading(true);
+        setError("");
+
+        try {
+            const confirmationResult = await signInWithPhoneNumber(
+                auth,
+                phoneNumber,
+                recaptchaVerifier.current as any
+            );
+            navigation.navigate("Verify", { verificationId: confirmationResult.verificationId, phone: phoneNumber });
+        } catch (err: any) {
+            console.error(err);
+            setError(err.message || "Failed to send verification code");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <RegisterLayout>
+            <FirebaseRecaptchaVerifierModal
+                ref={recaptchaVerifier}
+                firebaseConfig={app.options}
+            />
             <View className="flex-1 w-full px-4 py-6 flex-col justify-between items-center">
 
                 {/* Top bar: logo + skip */}
@@ -55,14 +86,25 @@ export default function RegisterScreen({ navigation }: Props) {
                 {/* Hero + form */}
                 <View className="w-full flex-col items-center mb-20">
                     <Text className="text-4xl font-semibold text-slate-950 text-center">
-                        Welcome back
+                        {isLogin ? "Welcome back" : "Create an Account"}
                     </Text>
                     <Text className="text-base mt-3 font-light text-slate-600 text-center">
-                        Sign in or create an account to continue
+                        {isLogin ? "Sign in to continue" : "Sign up to get started"}
                     </Text>
 
                     {/* Phone input */}
                     <View className={`mt-8 w-full flex-row items-center rounded-xl border px-4 py-3 bg-white ${error ? "border-red-400" : "border-slate-200"}`}>
+                        <TextInput
+                            className="text-base text-slate-900 border-r border-slate-200 pr-3 mr-3 w-16"
+                            placeholder="+91"
+                            keyboardType="phone-pad"
+                            value={countryCode}
+                            onChangeText={(val) => {
+                                const digits = val.replace(/[^\d]/g, "");
+                                setCountryCode(digits.length > 0 ? "+" + digits : "+");
+                            }}
+                            maxLength={5}
+                        />
                         <TextInput
                             className="flex-1 text-base text-slate-900"
                             placeholder="Phone number"
@@ -70,7 +112,7 @@ export default function RegisterScreen({ navigation }: Props) {
                             keyboardType="phone-pad"
                             value={phone}
                             onChangeText={(val) => {
-                                setPhone(val);
+                                setPhone(val.replace(/[^\d]/g, ""));
                                 if (error) setError("");
                             }}
                             maxLength={15}
@@ -83,10 +125,23 @@ export default function RegisterScreen({ navigation }: Props) {
                     ) : null}
 
                     {/* Continue button */}
+                    {isLoading ? (
+                        <View className="mt-4 pb-4 w-full items-center justify-center">
+                            <ActivityIndicator size="large" color="#0ea5e9" />
+                        </View>
+                    ) : (
+                        <CustomPresseableText
+                            stretch={true}
+                            onPress={handleContinue}
+                            text={isLogin ? "Login" : "Register"}
+                        />
+                    )}
+
                     <CustomPresseableText
                         stretch={true}
-                        onPress={handleContinue}
-                        text={t.continue}
+                        onPress={() => setIsLogin(!isLogin)}
+                        text={isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+                        variant="secondary"
                     />
                 </View>
 

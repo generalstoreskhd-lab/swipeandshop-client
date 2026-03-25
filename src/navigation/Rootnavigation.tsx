@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
     Login: undefined;
-    Verify: undefined;
+    Verify: { verificationId?: string; phone?: string };
     Name: undefined;
     Address: undefined;
 };
