@@ -6,16 +6,12 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setCategory } from "../store/slices/productsSlice";
 
 const categories: { name: string; icon: keyof typeof Ionicons.glyphMap }[] = [
-    { name: "Snacks", icon: "fast-food-outline" },
-    { name: "Cereals & Grains", icon: "leaf-outline" },
-    { name: "Stationary", icon: "pencil-outline" },
-    { name: "Fruits & Veg", icon: "basket-outline" },
+    { name: "Dairy", icon: "water-outline" },
+    { name: "Snacks and Ice Creams", icon: "ice-cream-outline" },
+    { name: "Cereals and Grains", icon: "leaf-outline" },
     { name: "Household", icon: "home-outline" },
-    { name: "Beverages", icon: "beer-outline" },
-    { name: "Personal Care", icon: "sparkles-outline" },
-    { name: "Pet Care", icon: "paw-outline" },
-    { name: "Baby Care", icon: "happy-outline" },
-    { name: "Meat & Fish", icon: "restaurant-outline" },
+    { name: "Stationery", icon: "pencil-outline" },
+    { name: "Fruits and Vegetables", icon: "nutrition-outline" },
 ];
 
 /**
