@@ -1,0 +1,8 @@
+Test Case ID,Module,Test Case Name,Description,Steps,Expected Result,Priority,Status
+TC-C-AUTH-01,Authentication,Verify Phone Login,"End-to-end login for an existing client using phone + OTP","1. Enter valid phone number 2. Enter correct OTP 3. Tap Verify","User is logged in and Home screen is displayed. Redux isLoggedIn: true.",Critical,Pending
+TC-C-AUTH-02,Authentication,Verify New User Registration,"Full onboarding flow for a brand new user","1. Enter new phone number 2. Verify OTP 3. Enter name 4. Enter address 5. Tap Continue","Firestore doc created in users-client. User lands on Home screen.",Critical,Pending
+TC-C-AUTH-03,Authentication,Verify Skip (Guest Mode),"User skips registration and browses as a guest","1. Tap Skip on login or OTP screen","App enters Home screen in guest mode. Redux isGuest: true.",High,Pending
+TC-C-AUTH-04,Authentication,Verify Auth Persistence,"Logged-in user's session is restored on app restart","1. Log in successfully 2. Close and reopen the app","App loads directly to Home screen. Login screen is not shown.",Critical,Pending
+TC-C-AUTH-05,Authentication,Verify Logout,"Logged-in user can log out and return to login screen","1. Navigate to Preferences 2. Tap Logout","Firebase session cleared. Redux reset. Login screen shown.",Critical,Pending
+TC-C-AUTH-06,Authentication,Verify Invalid OTP Handling,"System handles incorrect OTP entry","1. Enter incorrect 6-digit OTP 2. Tap Verify","Error message displayed. User remains on OTP screen.",High,Pending
+TC-C-AUTH-07,Authentication,Verify Phone Number Validation,"System validates phone number format","1. Enter invalid/short phone number 2. Tap Register/Login","Validation error message displayed.",Medium,Pending

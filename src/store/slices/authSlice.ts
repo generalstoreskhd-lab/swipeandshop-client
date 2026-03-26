@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/**
+ * Authentication state interface.
+ * Tracks login status, guest mode, and user profile details.
+ */
 interface AuthState {
   isLoggedIn: boolean;
   isGuest: boolean;
   user: {
     name: string;
     email?: string;
+    role: 'client' | 'admin';
     avatar?: string;
   } | null;
 }
@@ -20,12 +25,13 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ name: string; email?: string }>) => {
+    login: (state, action: PayloadAction<{ name: string; email?: string; role: 'client' | 'admin' }>) => {
       state.isLoggedIn = true;
       state.isGuest = false;
       state.user = {
         name: action.payload.name,
         email: action.payload.email,
+        role: action.payload.role,
       };
     },
     logout: (state) => {
@@ -42,8 +48,16 @@ const authSlice = createSlice({
         state.user = { ...state.user, ...action.payload };
       }
     },
+    /**
+     * Synchronizes the auth state from a listener (e.g. onAuthStateChanged).
+     */
+    setAuthUser: (state, action: PayloadAction<AuthState["user"]>) => {
+      state.user = action.payload;
+      state.isLoggedIn = !!action.payload;
+      state.isGuest = false;
+    },
   },
 });
 
-export const { login, logout, updateProfile, skipAuth } = authSlice.actions;
+export const { login, logout, updateProfile, skipAuth, setAuthUser } = authSlice.actions;
 export default authSlice.reducer;

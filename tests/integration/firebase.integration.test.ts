@@ -1,4 +1,4 @@
-import app, { auth, db, storage } from '../config/firebaseConfig';
+import app, { auth, db, storage } from '../../src/config/firebaseConfig';
 import { collection, addDoc, getDocs, deleteDoc, doc, query, where, terminate } from 'firebase/firestore';
 import { signInAnonymously, signOut, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import { deleteApp } from 'firebase/app';
@@ -154,4 +154,3 @@ describe('Firebase Integration', () => {
     });
 
 });
-

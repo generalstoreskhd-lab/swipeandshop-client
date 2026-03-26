@@ -10,48 +10,7 @@ import shirt from "../assets/images/products/shirt.png"
 import lamp from "../assets/images/products/lamp.png"
 import serum from "../assets/images/products/serum.png"
 
-const SWIPE_PRODUCTS = [
-    {
-        id: "1",
-        image: earbuds,
-        category: "ELECTRONICS",
-        name: "Wireless Earbuds Pro",
-        price: 129.00,
-        rating: 4.8
-    },
-    {
-        id: "2",
-        image: shirt,
-        category: "FASHION",
-        name: "Minimalist Linen Shirt",
-        price: 45.00,
-        rating: 4.5
-    },
-    {
-        id: "3",
-        image: lamp,
-        category: "HOME",
-        name: "Ceramic Table Lamp",
-        price: 78.00,
-        rating: 4.9
-    },
-    {
-        id: "4",
-        image: serum,
-        category: "BEAUTY",
-        name: "Organic Skin Serum",
-        price: 32.50,
-        rating: 4.7
-    },
-    {
-        id: "5",
-        image: earbuds, // Reuse for now
-        category: "ELECTRONICS",
-        name: "Noise Cancelling Headset",
-        price: 199.99,
-        rating: 4.9
-    }
-];
+const SWIPE_PRODUCTS: any[] = [];
 
 import { useAppSelector } from '../store/hooks';
 import LoginRequired from '../components/LoginRequired';

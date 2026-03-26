@@ -3,55 +3,7 @@ import { View, Text } from 'react-native';
 import HomeLayout from '../layouts/HomeLayout';
 import OrderCard from '../components/OrderCard';
 
-const DUMMY_ORDERS = [
-    {
-        orderId: 'SW1042',
-        status: 'Processing' as const,
-        date: 'Mar 18, 2026',
-        items: [
-            { name: 'Wireless Earbuds Pro', quantity: 1, unit: 'pc', price: 129.00 },
-            { name: 'USB-C Charging Cable', quantity: 2, unit: 'pcs', price: 12.99 },
-            { name: 'Silicone Ear Tips (Pack)', quantity: 1, unit: 'pack', price: 8.50 },
-        ],
-    },
-    {
-        orderId: 'SW1038',
-        status: 'Shipped' as const,
-        date: 'Mar 15, 2026',
-        items: [
-            { name: 'Minimalist Linen Shirt', quantity: 2, unit: 'pcs', price: 45.00 },
-            { name: 'Slim Fit Chinos', quantity: 1, unit: 'pc', price: 55.00 },
-        ],
-    },
-    {
-        orderId: 'SW1025',
-        status: 'Delivered' as const,
-        date: 'Mar 10, 2026',
-        items: [
-            { name: 'Ceramic Table Lamp', quantity: 1, unit: 'pc', price: 78.00 },
-        ],
-    },
-    {
-        orderId: 'SW1019',
-        status: 'Delivered' as const,
-        date: 'Mar 05, 2026',
-        items: [
-            { name: 'Organic Skin Serum', quantity: 3, unit: 'bottles', price: 32.50 },
-            { name: 'Vitamin C Face Wash', quantity: 1, unit: 'bottle', price: 18.00 },
-            { name: 'Moisturizing Cream', quantity: 2, unit: 'jars', price: 24.00 },
-            { name: 'Cotton Face Pads', quantity: 1, unit: 'pack', price: 6.99 },
-        ],
-    },
-    {
-        orderId: 'SW1012',
-        status: 'Cancelled' as const,
-        date: 'Feb 28, 2026',
-        items: [
-            { name: 'Noise Cancelling Headset', quantity: 1, unit: 'pc', price: 199.99 },
-            { name: 'Headphone Stand', quantity: 1, unit: 'pc', price: 29.99 },
-        ],
-    },
-];
+const DUMMY_ORDERS: any[] = [];
 
 import { useAppSelector } from '../store/hooks';
 import LoginRequired from '../components/LoginRequired';

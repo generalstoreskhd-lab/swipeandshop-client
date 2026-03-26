@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { logout } from '../store/slices/authSlice';
 import { toggleLanguage } from '../store/slices/settingsSlice';
 import { translations } from '../constants/translations';
+import { signOutUser } from '../firebase/auth';
 
 /**
  * PreferencesScreen Component
@@ -142,12 +143,15 @@ export default function PreferencesScreen() {
                                     showBorder={false} 
                                     onPress={() => dispatch(toggleLanguage())}
                                 />
-                            </View>
+                        </View>
                         </View>
 
                         {/* Logout Button */}
                         <TouchableOpacity 
-                            onPress={() => dispatch(logout())}
+                            onPress={async () => {
+                                await signOutUser();
+                                dispatch(logout());
+                            }}
                             className="flex-row items-center justify-center p-4 bg-rose-50 rounded-2xl border border-rose-100 mb-10"
                         >
                             <Ionicons name="log-out-outline" size={20} color="#e11d48" className="mr-2" />

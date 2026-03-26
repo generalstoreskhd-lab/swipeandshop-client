@@ -107,11 +107,14 @@ const notificationsSlice = createSlice({
     clearAll: (state) => {
       state.items = [];
     },
+    addNotification: (state, action: PayloadAction<Notification>) => {
+      state.items.unshift(action.payload);
+    },
     restoreDummyData: (state) => {
         state.items = DUMMY_NOTIFICATIONS;
     }
   },
 });
 
-export const { setNotifications, markAsRead, markAllAsRead, clearAll, restoreDummyData } = notificationsSlice.actions;
+export const { setNotifications, markAsRead, markAllAsRead, clearAll, addNotification, restoreDummyData } = notificationsSlice.actions;
 export default notificationsSlice.reducer;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../src/store';
 import { NavigationContainer } from '@react-navigation/native';
-import Topbar from '../Topbar';
+import Topbar from '../../src/components/Topbar';
 
 // Mock navigation hooks
 jest.mock('@react-navigation/native', () => {
@@ -61,4 +61,3 @@ describe('Topbar', () => {
     expect(screen.queryByPlaceholderText('Search products...')).toBeNull();
   });
 });
-

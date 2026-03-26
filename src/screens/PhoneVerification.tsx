@@ -1,5 +1,5 @@
 import { RegisterLayout } from "../layouts/RegisterLayout";
-import { Button, Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
 import { OtpInput } from "../components/OtpInput";
 
@@ -11,46 +11,64 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/RootNavigation";
 import { useAppDispatch } from "../store/hooks";
 import { skipAuth, login } from "../store/slices/authSlice";
+import { verifyOtpAndGetProfile } from "../firebase/auth";
 import { useState } from "react";
-import { ActivityIndicator, Alert } from "react-native";
-import { PhoneAuthProvider, signInWithCredential, getAdditionalUserInfo } from "firebase/auth";
-import { auth } from "../config/firebaseConfig";
+import { ActivityIndicator } from "react-native";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Verify'>;
 
+/**
+ * PhoneVerification Component
+ * 
+ * Handles the 6-digit OTP verification for client users. 
+ * On success, it either creates a new session (for existing users) 
+ * or redirects to the 'Name' screen for profile setup (for new users).
+ */
 export default function PhoneVerification({ navigation, route }: Props) {
     const dispatch = useAppDispatch();
     const [code, setCode] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
     
     const verificationId = route.params?.verificationId || "";
     const phone = route.params?.phone || "your number";
 
+    /**
+     * Reconciles the OTP with Firebase Auth and checks Firestore for an existing profile.
+     */
     const handleVerify = async () => {
         if (code.length < 6) {
-            Alert.alert("Invalid Code", "Please enter a 6-digit verification code");
+            setError("Please enter all 6 digits of the verification code.");
+            return;
+        }
+
+        if (!verificationId) {
+            setError("Session expired. Please go back and request a new code.");
             return;
         }
 
         setIsLoading(true);
+        setError("");
         try {
-            const credential = PhoneAuthProvider.credential(verificationId, code);
-            const userCredential = await signInWithCredential(auth, credential);
-            const additionalUserInfo = getAdditionalUserInfo(userCredential);
-            
-            if (additionalUserInfo?.isNewUser) {
-                // Navigate to next onboarding step for new users
+            console.log("[PhoneVerification] Starting OTP verification, code length:", code.length);
+            const result = await verifyOtpAndGetProfile(verificationId, code);
+            console.log("[PhoneVerification] Result:", JSON.stringify(result));
+
+            if (result.isNewUser) {
+                console.log("[PhoneVerification] New user, navigating to Name screen...");
                 navigation.navigate("Name");
             } else {
-                // For existing users, bypass onboarding and log them in
+                console.log("[PhoneVerification] Existing user, dispatching login...");
                 dispatch(login({ 
-                    name: userCredential.user.displayName || "User",
-                    email: userCredential.user.email || undefined
+                    name: result.profile?.name || "User",
+                    email: result.profile?.email,
+                    role: 'client'
                 }));
             }
         } catch (error: any) {
-            console.error(error);
-            Alert.alert("Verification Failed", error.message || "Invalid verification code");
+            console.error("[PhoneVerification] Verification error:", error);
+            const message = error?.message || "Verification failed. Please check the code and try again.";
+            setError(message);
         } finally {
             setIsLoading(false);
         }
@@ -91,6 +109,7 @@ export default function PhoneVerification({ navigation, route }: Props) {
                         <Text className="text-md font-light text-slate-600">Didn't receive the code?</Text>
                         <Text className="text-md font-semibold text-sky-500" onPress={() => navigation.goBack()}>Change Number / Resend</Text>
                     </View>
+                    {error ? <Text className="text-sm text-red-500 text-center px-4">{error}</Text> : null}
                     {isLoading ? (
                         <View className="mt-4"><ActivityIndicator size="large" color="#0ea5e9" /></View>
                     ) : (

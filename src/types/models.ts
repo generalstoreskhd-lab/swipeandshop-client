@@ -19,15 +19,18 @@ export type PaymentMethod = UPIPayment | CODPayment;
 export interface Category {
     id: string;
     name: string;
+    icon: string; // Ionicons name
 }
 
 export interface Product {
     id?: string;
     name: string;
+    brand: string;
     description: string;
     price: number;
+    discount?: number;
     categoryId: string;
-    images: string[];
+    images?: string[];
     isAvailable: boolean;
     createdAt?: Date | number;
     updatedAt?: Date | number;

@@ -7,33 +7,7 @@ import LoginRequired from '../components/LoginRequired';
 import { translations } from '../constants/translations';
 import CartItem, { CartItemProps } from '../components/CartItem';
 
-const INITIAL_CART_ITEMS: CartItemProps[] = [
-    {
-        id: '1',
-        name: 'Wireless Earbuds Pro',
-        price: 129.00,
-        imageUri: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=200&q=80',
-        quantity: 1,
-        color: 'Sleek White',
-    },
-    {
-        id: '2',
-        name: 'Minimalist Linen Shirt',
-        price: 45.00,
-        imageUri: 'https://images.unsplash.com/photo-1598033129183-c4f50c7176c8?w=200&q=80',
-        quantity: 2,
-        size: 'L',
-        color: 'Sand',
-    },
-    {
-        id: '3',
-        name: 'Artisan Vase Set',
-        price: 85.00,
-        imageUri: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=200&q=80',
-        quantity: 1,
-        color: 'Terracotta',
-    },
-];
+const INITIAL_CART_ITEMS: CartItemProps[] = [];
 
 /**
  * CartScreen Component

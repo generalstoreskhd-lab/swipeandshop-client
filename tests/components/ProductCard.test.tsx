@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
-import ProductCard from '../ProductCard';
+import ProductCard from '../../src/components/ProductCard';
 
 const mockProduct = {
   image: 1, // mock image asset id
