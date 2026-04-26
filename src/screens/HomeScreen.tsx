@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import HomeLayout from "../layouts/HomeLayout";
-import { PromoCard } from "../components/PromoCard";
+import { View } from "react-native";
+import BrowseProducts from "../components/BrowseProducts";
 import CategoryList from "../components/CategoryList";
 import NewArrivals from "../components/NewArrivals";
-import BrowseProducts from "../components/BrowseProducts";
+import { PromoCard } from "../components/PromoCard";
+import HomeLayout from "../layouts/HomeLayout";
 
 import { useAppSelector } from "../store/hooks";
 

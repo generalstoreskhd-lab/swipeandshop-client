@@ -1,22 +1,17 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import { View, Dimensions, Text } from 'react-native';
+import React, { forwardRef, useImperativeHandle } from 'react';
+import { Dimensions, View } from 'react-native';
 import {
     Gesture,
-    GestureDetector,
-    GestureHandlerRootView
+    GestureDetector
 } from 'react-native-gesture-handler';
-import Animated, {
-    useSharedValue,
-    useAnimatedStyle,
-    withSpring,
-    withTiming,
+import {
     Easing,
     runOnJS,
-    interpolate,
-    Extrapolation
+    useSharedValue,
+    withSpring,
+    withTiming
 } from 'react-native-reanimated';
 import SwipeCard from './SwipeCard';
-import { Ionicons } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25;

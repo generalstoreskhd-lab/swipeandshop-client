@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from "react-native";
-import ProductCard from "./ProductCard";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useAppSelector } from "../store/hooks";
+import ProductCard from "./ProductCard";
 
 /**
  * NewArrivals Component

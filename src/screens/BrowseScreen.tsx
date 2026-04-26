@@ -1,20 +1,16 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import HomeLayout from '../layouts/HomeLayout';
-import SwipeDeck, { SwipeDeckRef } from '../components/SwipeDeck';
 import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
+import SwipeDeck, { SwipeDeckRef } from '../components/SwipeDeck';
+import HomeLayout from '../layouts/HomeLayout';
 
 // Import images
-import earbuds from "../assets/images/products/earbuds.png"
-import shirt from "../assets/images/products/shirt.png"
-import lamp from "../assets/images/products/lamp.png"
-import serum from "../assets/images/products/serum.png"
 
 const SWIPE_PRODUCTS: any[] = [];
 
-import { useAppSelector } from '../store/hooks';
 import LoginRequired from '../components/LoginRequired';
 import { translations } from '../constants/translations';
+import { useAppSelector } from '../store/hooks';
 
 /**
  * BrowseScreen Component

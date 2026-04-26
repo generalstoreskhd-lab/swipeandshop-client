@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
-import CategoryIcon from "./CategoryIcon";
 import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setCategory } from "../store/slices/productsSlice";
+import CategoryIcon from "./CategoryIcon";
 
 const categories: { name: string; icon: keyof typeof Ionicons.glyphMap }[] = [
     { name: "Dairy", icon: "water-outline" },

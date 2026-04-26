@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { TextInput, View, NativeEventEmitter, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import React, { useMemo, useRef, useState } from 'react';
+import { Pressable, Text, TextInput, View } from 'react-native';
 
 interface OtpInputProps {
   numberOfDigits?: number;
@@ -16,55 +16,53 @@ export const OtpInput: React.FC<OtpInputProps> = ({
   placeholder = '',
   type = 'numeric',
 }) => {
-  const [otp, setOtp] = useState<string[]>(new Array(numberOfDigits).fill(''));
-  const inputs = useRef<TextInput[]>([]);
+  const [otpValue, setOtpValue] = useState('');
+  const inputRef = useRef<TextInput>(null);
+  const otp = useMemo(
+    () => Array.from({ length: numberOfDigits }, (_, index) => otpValue[index] ?? ''),
+    [numberOfDigits, otpValue]
+  );
 
-  const handleChangeText = (text: string, index: number) => {
-    const newOtp = [...otp];
-    // Handle pasting or multiple chars (though mostly handled by individual inputs)
-    const sanitizedText = text.slice(-1);
-    newOtp[index] = sanitizedText;
-    setOtp(newOtp);
-
-    const combinedOtp = newOtp.join('');
-    onTextChange?.(combinedOtp);
-
-    if (sanitizedText && index < numberOfDigits - 1) {
-      inputs.current[index + 1]?.focus();
-    }
-
-    if (newOtp.every((digit) => digit !== '') && combinedOtp.length === numberOfDigits) {
-      onFilled?.(combinedOtp);
+  const handleChangeText = (text: string) => {
+    const sanitized = text.replace(/\D/g, '').slice(0, numberOfDigits);
+    setOtpValue(sanitized);
+    onTextChange?.(sanitized);
+    if (sanitized.length === numberOfDigits) {
+      onFilled?.(sanitized);
     }
   };
 
-  const handleKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number) => {
-    if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
-      inputs.current[index - 1]?.focus();
-    }
+  const focusInput = () => {
+    inputRef.current?.focus();
   };
 
   return (
-    <View className="flex-row items-center justify-between w-full gap-x-2">
-      {new Array(numberOfDigits).fill(0).map((_, index) => (
-        <TextInput
+    <Pressable onPress={focusInput} className="w-full">
+      <View className="flex-row items-center justify-between w-full gap-x-2">
+        {new Array(numberOfDigits).fill(0).map((_, index) => (
+          <View
           key={index}
-          ref={(ref) => {
-            if (ref) inputs.current[index] = ref;
-          }}
           className={`h-14 w-12 rounded-xl border-2 bg-slate-50 text-center text-xl font-bold text-slate-900 shadow-sm
             ${otp[index] ? 'border-sky-500 bg-white' : 'border-slate-200'}`}
-          maxLength={1}
-          keyboardType={type === 'numeric' ? 'number-pad' : 'default'}
-          onChangeText={(text) => handleChangeText(text, index)}
-          onKeyPress={(e) => handleKeyPress(e, index)}
-          value={otp[index]}
-          placeholder={placeholder[index] || ''}
-          placeholderTextColor="#cbd5e1"
-          autoFocus={index === 0}
-          selectionColor="#0ea5e9"
-        />
-      ))}
-    </View>
+          style={{ alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text className={`text-xl font-bold ${otp[index] ? 'text-slate-900' : 'text-slate-300'}`}>
+            {otp[index] || placeholder[index] || ''}
+          </Text>
+        </View>
+        ))}
+      </View>
+      <TextInput
+        ref={inputRef}
+        value={otpValue}
+        onChangeText={handleChangeText}
+        keyboardType={type === 'numeric' ? 'number-pad' : 'default'}
+        maxLength={numberOfDigits}
+        autoFocus
+        textContentType="oneTimeCode"
+        caretHidden
+        style={{ position: 'absolute', opacity: 0, width: 1, height: 1 }}
+      />
+    </Pressable>
   );
 };

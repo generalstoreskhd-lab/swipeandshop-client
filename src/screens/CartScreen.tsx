@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import HomeLayout from '../layouts/HomeLayout';
-import { useAppSelector } from '../store/hooks';
+import React, { useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import CartItem, { CartItemProps } from '../components/CartItem';
 import LoginRequired from '../components/LoginRequired';
 import { translations } from '../constants/translations';
-import CartItem, { CartItemProps } from '../components/CartItem';
+import HomeLayout from '../layouts/HomeLayout';
+import { useAppSelector } from '../store/hooks';
 
 const INITIAL_CART_ITEMS: CartItemProps[] = [];
 

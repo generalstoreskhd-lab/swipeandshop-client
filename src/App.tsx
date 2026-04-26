@@ -1,23 +1,25 @@
-import 'react-native-gesture-handler';
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, useFonts } from '@expo-google-fonts/inter';
+import { Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold } from '@expo-google-fonts/outfit';
+import { Manrope_500Medium, Manrope_600SemiBold, Manrope_700Bold } from '@expo-google-fonts/manrope';
+import { PlusJakartaSans_500Medium, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
+import { NavigationContainer } from '@react-navigation/native';
+import { registerRootComponent } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect } from 'react';
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
 import "../global.css";
 import "./config/firebaseConfig";
-import { registerRootComponent } from 'expo';
-import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import AppNavigator from './navigation/AppNavigator';
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
-import { Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold } from '@expo-google-fonts/outfit';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import RootNavigation from './navigation/RootNavigation';
-import { useAppSelector, useAppDispatch } from './store/hooks';
-import { setAuthUser, logout } from './store/slices/authSlice';
-import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './config/firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import AppNavigator from './navigation/AppNavigator';
+import RootNavigation from './navigation/Rootnavigation';
+import { store } from './store';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { logout, setAuthUser } from './store/slices/authSlice';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -48,6 +50,12 @@ function AppWithStore() {
         Outfit_500Medium,
         Outfit_600SemiBold,
         Outfit_700Bold,
+        Manrope_500Medium,
+        Manrope_600SemiBold,
+        Manrope_700Bold,
+        PlusJakartaSans_500Medium,
+        PlusJakartaSans_600SemiBold,
+        PlusJakartaSans_700Bold,
     });
 
     useEffect(() => {
@@ -76,6 +84,8 @@ function AppWithStore() {
                     } else {
                         // TODO: [DEBUG] Remove after fixes
                         console.log("[App:onAuthStateChanged] No profile found for uid:", user.uid, "-> staying in onboarding flow");
+                        // Ensure the auth stack (Name/Address setup) stays visible for new users.
+                        dispatch(logout());
                     }
                     // If profile doesn't exist yet, we remain in the onboarding flow
                 } catch (error) {

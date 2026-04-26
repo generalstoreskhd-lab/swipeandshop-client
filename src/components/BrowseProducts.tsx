@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import ProductCard from "./ProductCard";
-import ProductSkeleton from "./ProductSkeleton";
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setSortOrder } from "../store/slices/productsSlice";
+import ProductCard from "./ProductCard";
+import ProductSkeleton from "./ProductSkeleton";
 
 /**
  * BrowseProducts Component

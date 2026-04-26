@@ -1,27 +1,50 @@
-import React, { useState, useRef } from "react";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { signInWithPhoneNumber } from "firebase/auth";
+import React, { useRef, useState } from "react";
 import {
     ActivityIndicator,
-    Button,
     Image,
     Pressable,
     Text,
     TextInput,
-    View,
+    View
 } from "react-native";
-import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import { signInWithPhoneNumber } from "firebase/auth";
 import app, { auth } from "../config/firebaseConfig";
 
-import logo from "../assets/images/logo.png";
-import { RegisterLayout } from "../layouts/RegisterLayout";
-import CustomPresseableText from "../components/CustomPresseable";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/RootNavigation";
+import logo from "../assets/images/logo.png";
+import CustomPresseableText from "../components/CustomPresseable";
+import { translations } from "../constants/translations";
+import { RegisterLayout } from "../layouts/RegisterLayout";
+import { RootStackParamList } from "../navigation/Rootnavigation";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { skipAuth } from "../store/slices/authSlice";
-import { translations } from "../constants/translations";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+
+const normalizeCountryCode = (value: string) => {
+    const digits = value.replace(/[^\d]/g, "");
+    return digits ? `+${digits}` : "+";
+};
+
+const isValidIndianNumber = (number: string) => /^[6-9]\d{9}$/.test(number);
+const isValidIrishNumber = (number: string) => /^8\d{8}$/.test(number);
+
+const getLoginErrorMessage = (err: any) => {
+    const code = err?.code as string | undefined;
+    switch (code) {
+        case "auth/invalid-phone-number":
+            return "Invalid phone number format. Use a valid Indian (+91) or Irish (+353) mobile number.";
+        case "auth/too-many-requests":
+            return "Too many attempts. Please wait a few minutes and try again.";
+        case "auth/network-request-failed":
+            return "Network error. Check your internet connection and try again.";
+        case "auth/quota-exceeded":
+            return "SMS quota exceeded temporarily. Please try again later.";
+        default:
+            return "Could not send verification code. Please try again.";
+    }
+};
 
 export default function RegisterScreen({ navigation }: Props) {
     const dispatch = useAppDispatch();
@@ -30,17 +53,20 @@ export default function RegisterScreen({ navigation }: Props) {
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
     const recaptchaVerifier = useRef(null);
 
     const t = translations[language];
 
     const handleContinue = async () => {
         const cleanPhone = phone.replace(/[^\d]/g, "");
-        const code = countryCode.startsWith("+") ? countryCode : `+${countryCode.replace(/[^\d]/g, "")}`;
+        const code = normalizeCountryCode(countryCode);
         const phoneNumber = `${code}${cleanPhone}`;
-        if (phoneNumber.length < 10) {
-            setError("Please enter a valid phone number with country code.");
+
+        const isIndia = code === "+91" && isValidIndianNumber(cleanPhone);
+        const isIreland = code === "+353" && isValidIrishNumber(cleanPhone);
+
+        if (!isIndia && !isIreland) {
+            setError("Only valid Indian (+91) and Irish (+353) mobile numbers are allowed.");
             return;
         }
 
@@ -55,8 +81,8 @@ export default function RegisterScreen({ navigation }: Props) {
             );
             navigation.navigate("Verify", { verificationId: confirmationResult.verificationId, phone: phoneNumber });
         } catch (err: any) {
-            console.error(err);
-            setError(err.message || "Failed to send verification code");
+            console.error("[RegisterScreen] send OTP error:", err?.code || err?.message || err);
+            setError(getLoginErrorMessage(err));
         } finally {
             setIsLoading(false);
         }
@@ -68,7 +94,7 @@ export default function RegisterScreen({ navigation }: Props) {
                 ref={recaptchaVerifier}
                 firebaseConfig={app.options}
             />
-            <View className="flex-1 w-full px-4 py-6 flex-col justify-between items-center">
+            <View className="flex-1 w-full px-4 py-6 pb-10 flex-col justify-between items-center">
 
                 {/* Top bar: logo + skip */}
                 <View className="w-full flex-row items-center justify-between mt-4">
@@ -79,34 +105,34 @@ export default function RegisterScreen({ navigation }: Props) {
                         resizeMode="contain"
                     />
                     <Pressable onPress={() => dispatch(skipAuth())}>
-                        <Text className="text-sky-500 text-base font-medium">{t.skip}</Text>
+                        <Text className="text-sky-500 text-base font-semibold font-jakarta">{t.skip}</Text>
                     </Pressable>
                 </View>
 
                 {/* Hero + form */}
                 <View className="w-full flex-col items-center mb-20">
-                    <Text className="text-4xl font-semibold text-slate-950 text-center">
-                        {isLogin ? "Welcome back" : "Create an Account"}
+                    <Text className="text-4xl text-slate-950 text-center font-manrope">
+                        Welcome back
                     </Text>
-                    <Text className="text-base mt-3 font-light text-slate-600 text-center">
-                        {isLogin ? "Sign in to continue" : "Sign up to get started"}
+                    <Text className="text-base mt-3 text-slate-600 text-center font-jakarta">
+                        Sign in to continue
                     </Text>
 
                     {/* Phone input */}
                     <View className={`mt-8 w-full flex-row items-center rounded-xl border px-4 py-3 bg-white ${error ? "border-red-400" : "border-slate-200"}`}>
                         <TextInput
-                            className="text-base text-slate-900 border-r border-slate-200 pr-3 mr-3 w-16"
+                            className="text-base text-slate-900 border-r border-slate-200 pr-3 mr-3 w-16 font-jakarta"
                             placeholder="+91"
                             keyboardType="phone-pad"
                             value={countryCode}
                             onChangeText={(val) => {
-                                const digits = val.replace(/[^\d]/g, "");
-                                setCountryCode(digits.length > 0 ? "+" + digits : "+");
+                                setCountryCode(normalizeCountryCode(val));
+                                if (error) setError("");
                             }}
                             maxLength={5}
                         />
                         <TextInput
-                            className="flex-1 text-base text-slate-900"
+                            className="flex-1 text-base text-slate-900 font-jakarta"
                             placeholder="Phone number"
                             placeholderTextColor="#94a3b8"
                             keyboardType="phone-pad"
@@ -121,7 +147,7 @@ export default function RegisterScreen({ navigation }: Props) {
 
                     {/* Error message */}
                     {error ? (
-                        <Text className="mt-2 w-full text-sm text-red-500">{error}</Text>
+                        <Text className="mt-2 w-full text-sm text-red-500 font-jakarta">{error}</Text>
                     ) : null}
 
                     {/* Continue button */}
@@ -133,23 +159,16 @@ export default function RegisterScreen({ navigation }: Props) {
                         <CustomPresseableText
                             stretch={true}
                             onPress={handleContinue}
-                            text={isLogin ? "Login" : "Register"}
+                            text="Login"
                         />
                     )}
-
-                    <CustomPresseableText
-                        stretch={true}
-                        onPress={() => setIsLogin(!isLogin)}
-                        text={isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
-                        variant="secondary"
-                    />
                 </View>
 
-                <View id="login-bottombar">
-                    <Text className="text-md text-center font-light text-slate-600">
+                <View id="login-bottombar" className="pb-4">
+                    <Text className="text-md text-center text-slate-600 font-jakarta">
                         By continuing, you agree to our
-                        <Text className="font-semibold"> Terms of Services </Text> and
-                        <Text className="font-semibold"> Privacy Policies</Text>
+                        <Text className="font-semibold font-jakarta"> Terms of Services </Text> and
+                        <Text className="font-semibold font-jakarta"> Privacy Policies</Text>
                     </Text>
                 </View>
 

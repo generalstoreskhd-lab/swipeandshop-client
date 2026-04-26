@@ -1,18 +1,16 @@
-import CustomPresseableText from "../components/CustomPresseable";
-import { RegisterLayout } from "../layouts/RegisterLayout";
 import { useState } from "react";
-import { Image, Text, TextInput, View, Pressable } from "react-native";
+import { Image, Text, TextInput, View } from "react-native";
 import logo from "../assets/images/logo.png";
-import { auth, db } from "../config/firebaseConfig";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import CustomPresseableText from "../components/CustomPresseable";
+import { auth } from "../config/firebaseConfig";
+import { RegisterLayout } from "../layouts/RegisterLayout";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/RootNavigation";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { skipAuth } from "../store/slices/authSlice";
-import { translations } from "../constants/translations";
 import { ActivityIndicator } from "react-native";
+import { translations } from "../constants/translations";
 import { createClientProfile } from "../firebase/auth";
+import { RootStackParamList } from "../navigation/Rootnavigation";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Name'>;
 
@@ -74,22 +72,22 @@ export default function NameScreen({ navigation }: Props) {
 
                 <View className="w-full flex-col items-center flex-1 justify-center gap-y-6 pb-20">
                     <View className="w-full mb-6">
-                        <Text className="text-4xl font-semibold text-slate-950 text-center">{t.whatShouldWeCallYou}</Text>
-                        <Text className="text-base mt-3 font-light text-slate-600 text-center">Tell us your name so we can personalize your experience</Text>
+                        <Text className="text-4xl text-slate-950 text-center font-manrope">{t.whatShouldWeCallYou}</Text>
+                        <Text className="text-base mt-3 text-slate-600 text-center font-jakarta">Tell us your name so we can personalize your experience</Text>
                     </View>
 
                     <View className="w-full flex flex-col gap-y-2 mb-6">
-                        <Text className="text-sm font-semibold text-slate-500 ml-2">{t.fullName}</Text>
+                        <Text className="text-sm font-semibold text-slate-500 ml-2 font-jakarta">{t.fullName}</Text>
                         <TextInput
                             placeholder={t.enterName}
                             placeholderTextColor="#94a3b8"
                             value={name}
                             onChangeText={setName}
-                            className={`${error ? "border-red-400" : "border-slate-200"} bg-white border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900`}
+                            className={`${error ? "border-red-400" : "border-slate-200"} bg-white border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900 font-jakarta`}
                         />
                     </View>
 
-                    {error ? <Text className="w-full text-left text-sm text-red-500 mb-2">{error}</Text> : null}
+                    {error ? <Text className="w-full text-left text-sm text-red-500 mb-2 font-jakarta">{error}</Text> : null}
 
                     {isLoading ? (
                         <ActivityIndicator size="large" color="#0ea5e9" className="my-4" />

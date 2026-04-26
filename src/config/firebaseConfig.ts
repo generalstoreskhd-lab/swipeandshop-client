@@ -1,10 +1,10 @@
 import { initializeApp } from 'firebase/app';
 import firebase from 'firebase/compat/app';
 import { getAuth } from 'firebase/auth';
+import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-
-import { getAnalytics } from "firebase/analytics";
+import { Platform } from 'react-native';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,7 +22,18 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+if (Platform.OS === 'web') {
+  // Analytics is web-only; avoid native runtime crashes.
+  isSupported()
+    .then((supported) => {
+      if (supported) {
+        getAnalytics(app);
+      }
+    })
+    .catch(() => {
+      // no-op: analytics is optional
+    });
+}
 
 // Initialize Firebase compat for expo-firebase-recaptcha web support
 if (!firebase.apps.length) {

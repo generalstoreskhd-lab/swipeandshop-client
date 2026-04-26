@@ -1,10 +1,9 @@
-import { Text, View, TextInput, Pressable } from "react-native";
-import { Image } from 'expo-image';
+import { Image, Pressable, Text, TextInput, View } from "react-native";
 
-import logo from "../assets/images/logo.png";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import logo from "../assets/images/logo.png";
 import { AppStackParamList } from "../navigation/AppNavigator";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setSearchQuery } from "../store/slices/productsSlice";
@@ -56,17 +55,26 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
                     ) : null}
 
                     {isLoggedIn ? (
-                        <View className="flex-col">
-                            <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-inter">Welcome back</Text>
-                            <Text className="text-xl font-bold text-slate-900 font-outfit">Hello {userName}</Text>
+                        <View className="flex-row items-center flex-none">
+                            <View className="w-12 h-12 rounded-xl items-center justify-center mr-3 overflow-hidden">
+                                <Image
+                                    source={logo}
+                                    style={{ width: 48, height: 48 }}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                            <View className="flex-col">
+                                <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-inter">Welcome back</Text>
+                                <Text className="text-xl font-bold text-slate-900 font-outfit">Hello {userName}</Text>
+                            </View>
                         </View>
                     ) : (
                         <View className="flex-row items-center flex-none">
                             <View className="w-12 h-12 rounded-xl items-center justify-center mr-3 overflow-hidden">
                                 <Image
                                     source={logo}
-                                    className="w-full h-full"
-                                    contentFit="contain"
+                                    style={{ width: 48, height: 48 }}
+                                    resizeMode="contain"
                                 />
                             </View>
 

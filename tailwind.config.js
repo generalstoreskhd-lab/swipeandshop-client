@@ -180,6 +180,8 @@ module.exports = {
         mono: ['SpaceMono_400Regular'],
         outfit: ['Outfit_400Regular', 'Outfit_500Medium', 'Outfit_600SemiBold', 'Outfit_700Bold'],
         inter: ['Inter_400Regular', 'Inter_500Medium', 'Inter_600SemiBold', 'Inter_700Bold'],
+        manrope: ['Manrope_500Medium', 'Manrope_600SemiBold', 'Manrope_700Bold'],
+        jakarta: ['PlusJakartaSans_500Medium', 'PlusJakartaSans_600SemiBold', 'PlusJakartaSans_700Bold'],
         'space-mono': ['SpaceMono_400Regular'],
       },
       fontWeight: {

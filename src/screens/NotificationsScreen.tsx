@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import HomeLayout from '../layouts/HomeLayout';
-import NotificationCard, { NotificationCardProps } from '../components/NotificationCard';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { markAllAsRead, clearAll, restoreDummyData } from '../store/slices/notificationsSlice';
+import React from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import LoginRequired from '../components/LoginRequired';
+import NotificationCard from '../components/NotificationCard';
+import HomeLayout from '../layouts/HomeLayout';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { clearAll, markAllAsRead, restoreDummyData } from '../store/slices/notificationsSlice';
 
 /**
  * NotificationsScreen
