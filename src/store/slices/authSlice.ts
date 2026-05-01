@@ -10,6 +10,7 @@ interface AuthState {
   user: {
     name: string;
     email?: string;
+    phone?: string | null;
     role: 'client' | 'admin';
     avatar?: string;
   } | null;
@@ -25,12 +26,13 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ name: string; email?: string; role: 'client' | 'admin' }>) => {
+    login: (state, action: PayloadAction<{ name: string; email?: string; phone?: string | null; role: 'client' | 'admin' }>) => {
       state.isLoggedIn = true;
       state.isGuest = false;
       state.user = {
         name: action.payload.name,
         email: action.payload.email,
+        phone: action.payload.phone,
         role: action.payload.role,
       };
     },

@@ -38,15 +38,15 @@ export default function CategoryList() {
         <View className="w-full mt-6 px-4">
             <View className="flex flex-row justify-between items-center mb-4">
                 <View className="flex-row items-center gap-x-2">
-                    <Text className="text-lg font-bold text-slate-900 font-outfit">Categories</Text>
+                    <Text className="text-lg font-bold text-white font-outfit">Categories</Text>
                     {selectedCategory && (
-                        <View className="bg-sky-100 px-2 py-0.5 rounded-full">
-                            <Text className="text-[10px] font-bold text-sky-700 uppercase font-inter">{selectedCategory}</Text>
+                        <View className="bg-orange-500/20 border border-orange-400/30 px-2 py-0.5 rounded-full">
+                            <Text className="text-[10px] font-bold text-orange-200 uppercase font-inter">{selectedCategory}</Text>
                         </View>
                     )}
                 </View>
                 <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)}>
-                    <Text className="text-sky-600 font-semibold text-sm font-inter">
+                    <Text className="text-orange-300 font-semibold text-sm font-inter">
                         {isExpanded ? "Show Less" : "See All"}
                     </Text>
                 </TouchableOpacity>
@@ -57,7 +57,7 @@ export default function CategoryList() {
                     {categories.map((category, index) => (
                         <TouchableOpacity 
                             key={index} 
-                            className={`w-[30%] items-center rounded-2xl p-2 ${selectedCategory === category.name ? 'bg-sky-50 border border-sky-100' : ''}`}
+                            className={`w-[30%] items-center rounded-2xl p-2 ${selectedCategory === category.name ? 'bg-white/10 border border-orange-400/40' : ''}`}
                             onPress={() => handleCategoryPress(category.name)}
                         >
                             <CategoryIcon
@@ -81,7 +81,7 @@ export default function CategoryList() {
                         {categories.map((category, index) => (
                             <TouchableOpacity 
                                 key={index}
-                                className={`rounded-2xl p-1 ${selectedCategory === category.name ? 'bg-sky-50 border border-sky-100' : ''}`}
+                                className={`rounded-2xl p-1 ${selectedCategory === category.name ? 'bg-white/10 border border-orange-400/40' : ''}`}
                                 onPress={() => handleCategoryPress(category.name)}
                             >
                                 <CategoryIcon

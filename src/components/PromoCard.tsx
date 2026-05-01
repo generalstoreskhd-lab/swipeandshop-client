@@ -10,27 +10,21 @@ import { View, Text, TouchableOpacity } from 'react-native';
  */
 export const PromoCard = () => {
     return (
-        <View className="w-full bg-sky-300 rounded-2xl overflow-hidden p-6 relative">
-            {/* Background Accent Shape */}
-            <View 
-                className="absolute right-[-20] top-[-20] w-48 h-48 bg-sky-400 rounded-full opacity-30" 
-                style={{ transform: [{ scale: 1.2 }] }}
-            />
-            
+        <View className="w-full bg-white/10 border border-white/15 rounded-[32px] overflow-hidden p-6 relative">
             <View className="z-10 gap-y-2">
-                <Text className="text-3xl font-bold text-slate-600 leading-tight font-outfit">
+                <Text className="text-3xl font-bold text-white leading-tight font-outfit">
                     Summer Sale{"\n"}Up to 50% Off
                 </Text>
                 
-                <Text className="text-slate-500 text-md mb-4 font-inter">
+                <Text className="text-white/65 text-md mb-4 font-inter">
                     Discover our latest collections
                 </Text>
 
                 <TouchableOpacity 
-                    className="bg-white px-6 py-3 rounded-xl self-start shadow-sm"
+                    className="bg-orange-500 px-6 py-3 rounded-[22px] self-start shadow-sm active:bg-orange-600"
                     activeOpacity={0.8}
                 >
-                    <Text className="text-sky-500 font-bold text-sm font-inter">SHOP NOW</Text>
+                    <Text className="text-white font-bold text-sm font-inter">SHOP NOW</Text>
                 </TouchableOpacity>
             </View>
         </View>

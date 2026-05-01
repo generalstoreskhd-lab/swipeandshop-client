@@ -123,10 +123,10 @@ export default function SwipeCard({ product, index, translateX }: SwipeCardProps
                 animatedStyle,
                 { zIndex: 100 - index }
             ]}
-            className="bg-white rounded-[40px] shadow-xl overflow-hidden border border-slate-100"
+            className="bg-white/10 rounded-[40px] shadow-xl overflow-hidden border border-white/15"
         >
             {/* Image Section */}
-            <View className="flex-1 bg-slate-50 relative">
+            <View className="flex-1 bg-black/35 relative">
                 <Image
                     source={product.image}
                     className="w-full h-full"
@@ -150,31 +150,31 @@ export default function SwipeCard({ product, index, translateX }: SwipeCardProps
             </View>
 
             {/* Info Section */}
-            <View className="p-6 bg-white gap-y-2">
+            <View className="p-6 bg-black/50 gap-y-2">
                 <View className="flex flex-row justify-between items-center">
-                    <Text className="text-sky-400 font-bold text-xs tracking-widest uppercase font-inter">
+                    <Text className="text-orange-300 font-bold text-xs tracking-widest uppercase font-inter">
                         {product.category}
                     </Text>
                     <View className="flex flex-row items-center gap-x-1">
                         <Ionicons name="star" size={14} color="#fbbf24" />
-                        <Text className="text-slate-400 text-xs font-medium font-inter">{product.rating}</Text>
+                        <Text className="text-white/55 text-xs font-medium font-inter">{product.rating}</Text>
                     </View>
                 </View>
 
-                <Text className="text-2xl font-bold text-slate-900 font-outfit" numberOfLines={1}>
+                <Text className="text-2xl font-bold text-white font-outfit" numberOfLines={1}>
                     {product.name}
                 </Text>
 
-                <Text className="text-3xl font-bold text-slate-900 font-outfit">
+                <Text className="text-3xl font-bold text-white font-outfit">
                     ${product.price.toFixed(2)}
                 </Text>
 
                 <View className="flex flex-row gap-x-2 mt-2">
-                    <View className="bg-slate-100 px-3 py-1 rounded-full">
-                        <Text className="text-slate-500 text-[10px] font-bold font-inter">ECO FRIENDLY</Text>
+                    <View className="bg-white/10 border border-white/15 px-3 py-1 rounded-full">
+                        <Text className="text-white/65 text-[10px] font-bold font-inter">ECO FRIENDLY</Text>
                     </View>
-                    <View className="bg-slate-100 px-3 py-1 rounded-full">
-                        <Text className="text-slate-500 text-[10px] font-bold font-inter">PREMIUM</Text>
+                    <View className="bg-white/10 border border-white/15 px-3 py-1 rounded-full">
+                        <Text className="text-white/65 text-[10px] font-bold font-inter">PREMIUM</Text>
                     </View>
                 </View>
             </View>

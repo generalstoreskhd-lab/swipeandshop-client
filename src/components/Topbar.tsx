@@ -32,7 +32,8 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
     const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
     
     const user = useAppSelector((state) => state.auth.user);
-    const userName = propUserName || user?.name || 'User';
+    const userName = propUserName || (user?.name && user.name !== 'User' ? user.name : user?.phone) || 'User';
+    const displayName = userName.split(' ')[0];
 
     // Navigation state helpers
     const canGoBack = navigation.canGoBack();
@@ -41,22 +42,22 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
     const isCart = routeName === 'Cart';
 
     return (
-        <View className="w-full bg-white border-b border-slate-100 p-4 pt-8 z-[1000]">
+        <View className="w-full bg-black/35 border-b border-white/10 p-4 pt-8 z-[1000]">
             {/* First Row: Brand and Actions */}
             <View className="flex-row items-center justify-between mb-3">
                 <View className="flex-row items-center flex-1">
                     {canGoBack && (isNotifications || isCart) ? (
                         <Pressable 
                             onPress={() => navigation.goBack()}
-                            className="p-2 bg-slate-50 rounded-full mr-3"
+                            className="p-2 bg-white/10 border border-white/10 rounded-full mr-3"
                         >
-                            <Ionicons name="arrow-back" size={24} color="#1e293b" />
+                            <Ionicons name="arrow-back" size={24} color="#ffffff" />
                         </Pressable>
                     ) : null}
 
                     {isLoggedIn ? (
                         <View className="flex-row items-center flex-none">
-                            <View className="w-12 h-12 rounded-xl items-center justify-center mr-3 overflow-hidden">
+                            <View className="w-12 h-12 items-center justify-center mr-3 overflow-hidden">
                                 <Image
                                     source={logo}
                                     style={{ width: 48, height: 48 }}
@@ -64,13 +65,13 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
                                 />
                             </View>
                             <View className="flex-col">
-                                <Text className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-inter">Welcome back</Text>
-                                <Text className="text-xl font-bold text-slate-900 font-outfit">Hello {userName}</Text>
+                                <Text className="text-[10px] font-bold text-orange-300 uppercase tracking-widest font-inter">Welcome back</Text>
+                                <Text className="text-xl font-bold text-white font-outfit">Hello, {displayName}</Text>
                             </View>
                         </View>
                     ) : (
                         <View className="flex-row items-center flex-none">
-                            <View className="w-12 h-12 rounded-xl items-center justify-center mr-3 overflow-hidden">
+                            <View className="w-12 h-12 items-center justify-center mr-3 overflow-hidden">
                                 <Image
                                     source={logo}
                                     style={{ width: 48, height: 48 }}
@@ -79,7 +80,7 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
                             </View>
 
                             <View className="flex-col">
-                                <Text className="text-lg font-bold text-slate-900 leading-tight font-outfit">Swipe & Shop</Text>
+                                <Text className="text-lg font-bold text-white leading-tight font-outfit">Swipe & Shop</Text>
                             </View>
                         </View>
                     )}
@@ -88,36 +89,36 @@ export default function Topbar({ isLoggedIn, userName: propUserName, showSearch 
                 <View className="flex-row items-center gap-x-3">
                     <Pressable 
                         onPress={() => navigation.navigate('Notifications')}
-                        className="p-2 bg-slate-50 rounded-full relative"
+                        className="p-2 bg-white/10 border border-white/10 rounded-full relative"
                     >
-                        <Ionicons name="notifications-outline" size={22} color="#1e293b" />
+                        <Ionicons name="notifications-outline" size={22} color="#ffffff" />
                         {showBadge && (
-                            <View className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
+                            <View className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-orange-500 rounded-full border-2 border-black" />
                         )}
                     </Pressable>
                     <Pressable 
                         onPress={() => navigation.navigate('Cart')}
-                        className="p-2 bg-slate-50 rounded-full"
+                        className="p-2 bg-white/10 border border-white/10 rounded-full"
                     >
-                        <Ionicons name="cart-outline" size={22} color="#1e293b" />
+                        <Ionicons name="cart-outline" size={22} color="#ffffff" />
                     </Pressable>
                 </View>
             </View>
 
             {/* Second Row: Search */}
             {showSearch && (
-                <View className="flex-row items-center bg-slate-50 rounded-2xl px-4 py-3 border border-slate-100 shadow-inner">
-                    <Ionicons name="search-outline" size={20} color="#64748b" />
+                <View className="flex-row items-center bg-white/10 rounded-[24px] px-4 py-3 border border-white/15 shadow-inner">
+                    <Ionicons name="search-outline" size={20} color="#fb923c" />
                     <TextInput
                         placeholder="Search products..."
-                        className="ml-3 flex-1 text-slate-900 text-sm font-medium font-inter h-full"
-                        placeholderTextColor="#94a3b8"
+                        className="ml-3 flex-1 text-white text-sm font-medium font-inter h-full"
+                        placeholderTextColor="#ffffff99"
                         value={searchQuery}
                         onChangeText={(text) => dispatch(setSearchQuery(text))}
                     />
                     {searchQuery.length > 0 && (
                         <Pressable onPress={() => dispatch(setSearchQuery(""))} className="ml-2">
-                            <Ionicons name="close-circle" size={18} color="#94a3b8" />
+                            <Ionicons name="close-circle" size={18} color="#ffffff99" />
                         </Pressable>
                     )}
                 </View>

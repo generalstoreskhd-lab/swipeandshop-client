@@ -36,24 +36,24 @@ export default function NotificationsScreen() {
         <HomeLayout showSearch={false} showBadge={unreadCount > 0}>
             {/* Header */}
             <View className="px-4 pt-2 pb-4">
-                <Text className="text-[10px] font-bold text-blue-500 uppercase tracking-widest font-inter mb-1">
+                <Text className="text-[10px] font-bold text-orange-300 uppercase tracking-widest font-inter mb-1">
                     Updates & Alerts
                 </Text>
                 <View className="flex-row items-center justify-between">
-                    <Text className="text-2xl font-bold text-slate-900 font-outfit">
+                    <Text className="text-2xl font-bold text-white font-outfit">
                         Notifications
                     </Text>
                     <View className="flex-row items-center gap-x-4">
                         {unreadCount > 0 && (
                             <TouchableOpacity onPress={handleMarkAllRead}>
-                                <Text className="text-sm font-semibold text-blue-500 font-inter">
+                                <Text className="text-sm font-semibold text-orange-300 font-inter">
                                     Mark all as read
                                 </Text>
                             </TouchableOpacity>
                         )}
                         {notifications.length > 0 && (
                             <TouchableOpacity onPress={handleClearAll}>
-                                <Text className="text-sm font-semibold text-slate-400 font-inter">
+                                <Text className="text-sm font-semibold text-white/45 font-inter">
                                     Clear all
                                 </Text>
                             </TouchableOpacity>
@@ -69,18 +69,18 @@ export default function NotificationsScreen() {
                 ))
             ) : (
                 <View className="flex-1 items-center justify-center py-20 px-10">
-                    <View className="w-24 h-24 bg-slate-100 rounded-full items-center justify-center mb-6">
-                        <Ionicons name="notifications-off-outline" size={48} color="#94a3b8" />
+                    <View className="w-24 h-24 bg-white/10 border border-white/15 rounded-full items-center justify-center mb-6">
+                        <Ionicons name="notifications-off-outline" size={48} color="#fb923c" />
                     </View>
-                    <Text className="text-xl font-bold text-slate-900 font-outfit text-center mb-2">
+                    <Text className="text-xl font-bold text-white font-outfit text-center mb-2">
                         All caught up!
                     </Text>
-                    <Text className="text-sm text-slate-500 font-inter text-center leading-5 mb-8">
+                    <Text className="text-sm text-white/60 font-inter text-center leading-5 mb-8">
                         You have no new notifications. We'll let you know when something exciting happens.
                     </Text>
                     <TouchableOpacity 
                         onPress={() => dispatch(restoreDummyData())}
-                        className="bg-slate-900 px-8 py-3 rounded-full"
+                        className="bg-orange-500 px-8 py-3 rounded-full"
                     >
                         <Text className="text-white font-bold font-inter text-sm">
                             Restore Dummy Data

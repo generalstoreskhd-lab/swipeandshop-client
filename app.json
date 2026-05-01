@@ -11,6 +11,8 @@
       "icon": "./src/assets/expo.icon"
     },
     "android": {
+      "package": "com.generalstores.swipeandshopclient",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./src/assets/images/android-icon-foreground.png",
@@ -35,11 +37,18 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1676b2f5-3fc8-45df-bc5d-c263bf3f3f31"
+      }
     }
   }
 }

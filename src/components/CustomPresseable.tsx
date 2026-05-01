@@ -14,9 +14,9 @@ export default function CustomPresseableText({ stretch, onPress, text, variant =
     return (
         <Pressable
             onPress={onPress}
-            className={`${stretch ? "self-stretch" : ""} rounded-xl mt-4 ${isPrimary ? "bg-sky-500 active:bg-sky-600 shadow-md shadow-sky-200" : "bg-transparent active:bg-slate-100"} py-4 items-center`}
+            className={`${stretch ? "self-stretch" : ""} rounded-[28px] mt-4 ${isPrimary ? "bg-orange-500 active:bg-orange-600 shadow-lg shadow-orange-950/40" : "bg-white/10 active:bg-white/15 border border-white/15"} py-4 items-center`}
         >
-            <Text className={`text-base font-semibold ${isPrimary ? "text-white" : "text-slate-600"}`}>{text}</Text>
+            <Text className={`text-base font-semibold ${isPrimary ? "text-white" : "text-white/90"}`}>{text}</Text>
         </Pressable>
     )
 }

@@ -54,7 +54,7 @@ export default function BrowseScreen() {
 
     return (
         <HomeLayout scrollable={false} showSearch={false}>
-            <View className="flex-1 bg-slate-50 relative">
+            <View className="flex-1 relative">
                 {/* Swipe Area - Takes full space for perfect vertical centering */}
                 <View className="flex-1 items-center justify-center ">
                     {!isEmpty ? (
@@ -70,31 +70,31 @@ export default function BrowseScreen() {
                             <View className="absolute bottom-[-40] left-0 right-0 flex flex-row justify-center gap-x-12 px-6">
                                 <TouchableOpacity
                                     onPress={() => deckRef.current?.swipeLeft()}
-                                    className="bg-white w-20 h-20 rounded-full shadow-xl border border-slate-100 items-center justify-center active:bg-slate-50"
+                                    className="bg-black/45 w-20 h-20 rounded-full shadow-xl border border-white/15 items-center justify-center active:bg-white/10"
                                 >
                                     <Ionicons name="close" size={40} color="#f43f5e" />
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => deckRef.current?.swipeRight()}
-                                    className="bg-white w-20 h-20 rounded-full shadow-xl border border-slate-100 items-center justify-center active:bg-slate-50"
+                                    className="bg-orange-500 w-20 h-20 rounded-full shadow-xl border border-orange-300/50 items-center justify-center active:bg-orange-600"
                                 >
-                                    <Ionicons name="cart" size={40} color="#10b981" />
+                                    <Ionicons name="cart" size={40} color="#ffffff" />
                                 </TouchableOpacity>
                             </View>
                         </>
                     ) : (
                         <View className="flex-1 items-center justify-center p-10">
-                            <View className="bg-white p-8 rounded-full shadow-sm mb-6">
-                                <Ionicons name="sparkles" size={60} color="#0ea5e9" />
+                            <View className="bg-white/10 border border-white/15 p-8 rounded-full shadow-sm mb-6">
+                                <Ionicons name="sparkles" size={60} color="#fb923c" />
                             </View>
-                            <Text className="text-2xl font-bold text-slate-900 font-outfit text-center mb-2">
+                            <Text className="text-2xl font-bold text-white font-outfit text-center mb-2">
                                 {t.seenEverything}
                             </Text>
-                            <Text className="text-slate-500 font-inter text-center mb-8">
+                            <Text className="text-white/65 font-inter text-center mb-8">
                                 {t.noMoreProducts}
                             </Text>
                             <TouchableOpacity
-                                className="bg-sky-500 px-8 py-4 rounded-2xl shadow-lg active:bg-sky-600"
+                                className="bg-orange-500 px-8 py-4 rounded-[24px] shadow-lg active:bg-orange-600"
                                 onPress={() => setCurrentIndex(0)}
                             >
                                 <Text className="text-white font-bold font-inter text-lg">{t.restartDiscovery}</Text>

@@ -1,7 +1,8 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ImageBackground, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Topbar from "../components/Topbar";
+import darkBackground from "../assets/dark.jpg";
 
 interface HomeLayoutProps {
     children: React.ReactNode;
@@ -26,26 +27,30 @@ export default function HomeLayout({ children, scrollable = true, showSearch = t
     const badgeVisible = showBadge && unreadCount > 0;
 
     return (
-        <SafeAreaView className="flex-1 w-full bg-slate-50" edges={['top']}>
-            {scrollable ? (
-                <View className="flex-1">
-                    <ScrollView
-                        className="w-full flex-1"
-                        contentContainerStyle={{ paddingBottom: 100 }}
-                        stickyHeaderIndices={[0]}
-                    >
-                        <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} showBadge={badgeVisible} />
-                        {children}
-                    </ScrollView>
+        <SafeAreaView className="flex-1 w-full bg-black" edges={['top']}>
+            <ImageBackground source={darkBackground} resizeMode="cover" className="flex-1 w-full">
+                <View className="flex-1 w-full bg-black/55">
+                    {scrollable ? (
+                        <View className="flex-1">
+                            <ScrollView
+                                className="w-full flex-1"
+                                contentContainerStyle={{ paddingBottom: 100 }}
+                                stickyHeaderIndices={[0]}
+                            >
+                                <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} showBadge={badgeVisible} />
+                                {children}
+                            </ScrollView>
+                        </View>
+                    ) : (
+                        <View className="flex-1 w-full">
+                            <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} showBadge={badgeVisible} />
+                            <View className="flex-1 w-full" style={{ paddingBottom: 100 }}>
+                                {children}
+                            </View>
+                        </View>
+                    )}
                 </View>
-            ) : (
-                <View className="flex-1 w-full">
-                    <Topbar isLoggedIn={isLoggedIn} showSearch={showSearch} showBadge={badgeVisible} />
-                    <View className="flex-1 w-full" style={{ paddingBottom: 100 }}>
-                        {children}
-                    </View>
-                </View>
-            )}
+            </ImageBackground>
         </SafeAreaView>
     );
 }

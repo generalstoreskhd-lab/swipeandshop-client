@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 interface OtpInputProps {
@@ -23,12 +23,20 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     [numberOfDigits, otpValue]
   );
 
+  useEffect(() => {
+    const id = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 120);
+    return () => clearTimeout(id);
+  }, []);
+
   const handleChangeText = (text: string) => {
-    const sanitized = text.replace(/\D/g, '').slice(0, numberOfDigits);
-    setOtpValue(sanitized);
-    onTextChange?.(sanitized);
-    if (sanitized.length === numberOfDigits) {
-      onFilled?.(sanitized);
+    const sanitized = type === 'numeric' ? text.replace(/\D/g, '') : text;
+    const trimmed = sanitized.slice(0, numberOfDigits);
+    setOtpValue(trimmed);
+    onTextChange?.(trimmed);
+    if (trimmed.length === numberOfDigits) {
+      onFilled?.(trimmed);
     }
   };
 
@@ -42,11 +50,11 @@ export const OtpInput: React.FC<OtpInputProps> = ({
         {new Array(numberOfDigits).fill(0).map((_, index) => (
           <View
           key={index}
-          className={`h-14 w-12 rounded-xl border-2 bg-slate-50 text-center text-xl font-bold text-slate-900 shadow-sm
-            ${otp[index] ? 'border-sky-500 bg-white' : 'border-slate-200'}`}
+          className={`h-14 w-12 rounded-xl border bg-black/35 text-center text-xl font-bold text-white shadow-sm
+          ${otp[index] ? 'border-orange-400 bg-white/10' : 'border-white/15'}`}
           style={{ alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text className={`text-xl font-bold ${otp[index] ? 'text-slate-900' : 'text-slate-300'}`}>
+          <Text className={`text-xl font-bold ${otp[index] ? 'text-white' : 'text-white/35'}`}>
             {otp[index] || placeholder[index] || ''}
           </Text>
         </View>
@@ -59,8 +67,9 @@ export const OtpInput: React.FC<OtpInputProps> = ({
         keyboardType={type === 'numeric' ? 'number-pad' : 'default'}
         maxLength={numberOfDigits}
         autoFocus
+        blurOnSubmit={false}
         textContentType="oneTimeCode"
-        caretHidden
+        selectionColor="#f97316"
         style={{ position: 'absolute', opacity: 0, width: 1, height: 1 }}
       />
     </Pressable>

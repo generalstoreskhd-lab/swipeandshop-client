@@ -42,10 +42,10 @@ export default function CartScreen() {
         <HomeLayout showSearch={false}>
             {/* Header */}
             <View className="px-4 pt-2 pb-4">
-                <Text className="text-[10px] font-bold text-blue-500 uppercase tracking-widest font-inter mb-1">
+                <Text className="text-[10px] font-bold text-orange-300 uppercase tracking-widest font-inter mb-1">
                     {t.myShoppingBag}
                 </Text>
-                <Text className="text-2xl font-bold text-slate-900 font-outfit">
+                <Text className="text-2xl font-bold text-white font-outfit">
                     {t.cart} ({items.length})
                 </Text>
             </View>
@@ -67,21 +67,21 @@ export default function CartScreen() {
                         ))}
 
                         {/* Order Summary Card */}
-                        <View className="bg-white rounded-3xl p-5 mt-4 border border-slate-100 shadow-sm">
-                            <Text className="text-base font-bold text-slate-900 font-outfit mb-4">{t.orderSummary}</Text>
+                        <View className="bg-white/10 rounded-[28px] p-5 mt-4 border border-white/15 shadow-sm">
+                            <Text className="text-base font-bold text-white font-outfit mb-4">{t.orderSummary}</Text>
                             
                             <View className="gap-y-3">
                                 <SummaryRow label={t.subtotal} value={subtotal} />
                                 <SummaryRow label={t.shipping} value={shipping} />
                                 <SummaryRow label={t.tax} value={tax} />
-                                <View className="h-[1px] bg-slate-50 w-full my-1" />
+                                <View className="h-[1px] bg-white/10 w-full my-1" />
                                 <View className="flex-row justify-between items-center">
-                                    <Text className="text-lg font-bold text-slate-900 font-outfit">{t.total}</Text>
-                                    <Text className="text-xl font-bold text-blue-600 font-outfit">${total.toFixed(2)}</Text>
+                                    <Text className="text-lg font-bold text-white font-outfit">{t.total}</Text>
+                                    <Text className="text-xl font-bold text-orange-300 font-outfit">${total.toFixed(2)}</Text>
                                 </View>
                             </View>
 
-                            <TouchableOpacity className="bg-slate-900 w-full py-4 rounded-2xl items-center mt-6 shadow-md shadow-slate-300">
+                            <TouchableOpacity className="bg-orange-500 w-full py-4 rounded-[24px] items-center mt-6 shadow-md">
                                 <Text className="text-white font-bold font-inter text-base">{t.proceedToCheckout}</Text>
                             </TouchableOpacity>
                         </View>
@@ -91,18 +91,18 @@ export default function CartScreen() {
                 </View>
             ) : (
                 <View className="flex-1 items-center justify-center py-20 px-10">
-                    <View className="w-24 h-24 bg-slate-100 rounded-full items-center justify-center mb-6">
-                        <Ionicons name="cart-outline" size={48} color="#94a3b8" />
+                    <View className="w-24 h-24 bg-white/10 border border-white/15 rounded-full items-center justify-center mb-6">
+                        <Ionicons name="cart-outline" size={48} color="#fb923c" />
                     </View>
-                    <Text className="text-xl font-bold text-slate-900 font-outfit text-center mb-2">
+                    <Text className="text-xl font-bold text-white font-outfit text-center mb-2">
                         {t.cartEmpty}
                     </Text>
-                    <Text className="text-sm text-slate-500 font-inter text-center leading-5 mb-8">
+                    <Text className="text-sm text-white/60 font-inter text-center leading-5 mb-8">
                         {t.cartEmptyDesc}
                     </Text>
                     <TouchableOpacity 
                         onPress={() => setItems(INITIAL_CART_ITEMS)}
-                        className="bg-slate-900 px-8 py-3 rounded-full"
+                        className="bg-orange-500 px-8 py-3 rounded-full"
                     >
                         <Text className="text-white font-bold font-inter text-sm">
                             {t.startShopping}
@@ -117,8 +117,8 @@ export default function CartScreen() {
 function SummaryRow({ label, value }: { label: string; value: number }) {
     return (
         <View className="flex-row justify-between items-center">
-            <Text className="text-sm text-slate-500 font-inter">{label}</Text>
-            <Text className="text-sm font-bold text-slate-900 font-inter">${value.toFixed(2)}</Text>
+            <Text className="text-sm text-white/60 font-inter">{label}</Text>
+            <Text className="text-sm font-bold text-white font-inter">${value.toFixed(2)}</Text>
         </View>
     );
 }

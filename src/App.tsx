@@ -3,18 +3,15 @@ import { Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold
 import { Manrope_500Medium, Manrope_600SemiBold, Manrope_700Bold } from '@expo-google-fonts/manrope';
 import { PlusJakartaSans_500Medium, PlusJakartaSans_600SemiBold, PlusJakartaSans_700Bold } from '@expo-google-fonts/plus-jakarta-sans';
 import { NavigationContainer } from '@react-navigation/native';
+import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth/lib/modular';
 import { registerRootComponent } from 'expo';
 import * as SplashScreen from 'expo-splash-screen';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect } from 'react';
-import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import "../global.css";
-import "./config/firebaseConfig";
-import { auth, db } from './config/firebaseConfig';
+import { getOrCreateClientProfile } from './firebase/auth';
 import AppNavigator from './navigation/AppNavigator';
 import RootNavigation from './navigation/Rootnavigation';
 import { store } from './store';
@@ -61,37 +58,20 @@ function AppWithStore() {
     useEffect(() => {
         /**
          * Subscribe to Firebase auth state changes.
-         * On user sign-in: fetch Firestore profile and update Redux.
+         * On user sign-in: sync the Firebase Auth session into Redux.
          * On sign-out: dispatch logout to reset Redux state.
          */
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        const unsubscribe = onAuthStateChanged(getAuth(), async (user) => {
             // TODO: [DEBUG] Remove after fixes
             console.log("[App:onAuthStateChanged] Fired | uid:", user?.uid ?? "null (signed out)");
             if (user) {
-                try {
-                    // TODO: [DEBUG] Remove after fixes
-                    console.log("[App:onAuthStateChanged] Fetching Firestore profile for uid:", user.uid);
-                    const userDoc = await getDoc(doc(db, "users-client", user.uid));
-                    if (userDoc.exists()) {
-                        const data = userDoc.data();
-                        // TODO: [DEBUG] Remove after fixes
-                        console.log("[App:onAuthStateChanged] Profile found:", JSON.stringify(data));
-                        dispatch(setAuthUser({
-                            name: data.name,
-                            email: data.email || "",
-                            role: 'client',
-                        }));
-                    } else {
-                        // TODO: [DEBUG] Remove after fixes
-                        console.log("[App:onAuthStateChanged] No profile found for uid:", user.uid, "-> staying in onboarding flow");
-                        // Ensure the auth stack (Name/Address setup) stays visible for new users.
-                        dispatch(logout());
-                    }
-                    // If profile doesn't exist yet, we remain in the onboarding flow
-                } catch (error) {
-                    // TODO: [DEBUG] Remove after fixes
-                    console.error("[App:onAuthStateChanged] Error fetching profile:", error);
-                }
+                const profile = await getOrCreateClientProfile(user);
+                dispatch(setAuthUser({
+                    name: profile.name,
+                    email: profile.email,
+                    phone: profile.phone,
+                    role: profile.role,
+                }));
             } else {
                 // TODO: [DEBUG] Remove after fixes
                 console.log("[App:onAuthStateChanged] Signed out -> dispatching logout");

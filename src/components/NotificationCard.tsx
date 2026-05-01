@@ -40,10 +40,10 @@ export interface NotificationCardProps {
  * Controls the icon circle color and the Ionicons glyph.
  */
 const TYPE_CONFIG: Record<NotificationType, { bg: string; iconColor: string; icon: keyof typeof Ionicons.glyphMap }> = {
-    order:    { bg: 'bg-blue-100',   iconColor: '#2563eb', icon: 'cube' },
-    wishlist: { bg: 'bg-purple-100', iconColor: '#7c3aed', icon: 'trending-down' },
-    promo:    { bg: 'bg-orange-100', iconColor: '#ea580c', icon: 'star' },
-    system:   { bg: 'bg-emerald-100', iconColor: '#059669', icon: 'information-circle' },
+    order:    { bg: 'bg-white/10', iconColor: '#fb923c', icon: 'cube' },
+    wishlist: { bg: 'bg-white/10', iconColor: '#fb923c', icon: 'trending-down' },
+    promo:    { bg: 'bg-white/10', iconColor: '#fb923c', icon: 'star' },
+    system:   { bg: 'bg-white/10', iconColor: '#fb923c', icon: 'information-circle' },
 };
 
 /**
@@ -71,8 +71,8 @@ export default function NotificationCard({
         <View
             className={`mx-4 mb-3 rounded-2xl overflow-hidden ${
                 isRead
-                    ? 'bg-slate-50 border border-slate-100'
-                    : 'bg-white border-l-4 border-blue-600 shadow-sm'
+                    ? 'bg-white/5 border border-white/10'
+                    : 'bg-white/10 border-l-4 border-orange-500 shadow-sm'
             }`}
         >
             <View className="p-4">
@@ -88,20 +88,20 @@ export default function NotificationCard({
                         <View className="flex-row items-start justify-between mb-1">
                             <Text
                                 className={`text-base font-bold font-outfit flex-1 mr-2 ${
-                                    isRead ? 'text-slate-500' : 'text-slate-900'
+                                    isRead ? 'text-white/55' : 'text-white'
                                 }`}
                                 numberOfLines={2}
                             >
                                 {title}
                             </Text>
-                            <Text className="text-[10px] font-bold text-blue-500 uppercase tracking-wider font-inter mt-0.5">
+                            <Text className="text-[10px] font-bold text-orange-300 uppercase tracking-wider font-inter mt-0.5">
                                 {timeAgo}
                             </Text>
                         </View>
 
                         <Text
                             className={`text-sm leading-5 font-inter ${
-                                isRead ? 'text-slate-400' : 'text-slate-500'
+                                isRead ? 'text-white/40' : 'text-white/60'
                             }`}
                         >
                             {body}
@@ -111,8 +111,8 @@ export default function NotificationCard({
 
                 {/* Product Thumbnail (optional) */}
                 {product && (
-                    <View className="flex-row items-center mt-3 ml-14 bg-slate-50 rounded-xl p-2.5">
-                        <View className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 mr-3">
+                    <View className="flex-row items-center mt-3 ml-14 bg-black/35 rounded-xl p-2.5">
+                        <View className="w-12 h-12 rounded-lg overflow-hidden bg-white/10 mr-3">
                             <Image
                                 source={{ uri: product.imageUri }}
                                 className="w-full h-full"
@@ -120,15 +120,15 @@ export default function NotificationCard({
                             />
                         </View>
                         <View>
-                            <Text className="text-sm font-bold text-slate-900 font-outfit" numberOfLines={1}>
+                            <Text className="text-sm font-bold text-white font-outfit" numberOfLines={1}>
                                 {product.name}
                             </Text>
                             <View className="flex-row items-center gap-x-2">
-                                <Text className="text-sm font-bold text-slate-900 font-outfit">
+                                <Text className="text-sm font-bold text-white font-outfit">
                                     ${product.currentPrice.toFixed(2)}
                                 </Text>
                                 {product.originalPrice && (
-                                    <Text className="text-xs text-slate-400 line-through font-inter">
+                                    <Text className="text-xs text-white/40 line-through font-inter">
                                         ${product.originalPrice.toFixed(2)}
                                     </Text>
                                 )}
@@ -146,7 +146,7 @@ export default function NotificationCard({
                                 onPress={action.onPress}
                                 className={`px-5 py-2.5 rounded-full ${
                                     action.variant === 'primary'
-                                        ? 'bg-slate-900'
+                                        ? 'bg-orange-500'
                                         : ''
                                 }`}
                             >
@@ -154,7 +154,7 @@ export default function NotificationCard({
                                     className={`text-xs font-bold font-inter ${
                                         action.variant === 'primary'
                                             ? 'text-white'
-                                            : 'text-slate-600'
+                                            : 'text-white/70'
                                     }`}
                                 >
                                     {action.label}

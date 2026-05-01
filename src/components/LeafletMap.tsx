@@ -51,15 +51,15 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
   `;
 
   return (
-    <View className="h-[200px] w-full rounded-2xl overflow-hidden border-2 border-slate-200 bg-slate-100">
+    <View className="h-[200px] w-full rounded-2xl overflow-hidden border border-white/15 bg-black/35">
       <WebView
         originWhitelist={['*']}
         source={{ html: mapHtml }}
         className="flex-1"
         startInLoadingState={true}
         renderLoading={() => (
-          <View className="absolute inset-0 justify-center items-center bg-slate-50">
-            <ActivityIndicator size="large" color="#0ea5e9" />
+          <View className="absolute inset-0 justify-center items-center bg-black/35">
+            <ActivityIndicator size="large" color="#f97316" />
           </View>
         )}
       />

@@ -1,9 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import firebase from 'firebase/compat/app';
-import { getAuth } from 'firebase/auth';
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import nativeAuth from '@react-native-firebase/auth';
+import nativeFirestore from '@react-native-firebase/firestore';
+import nativeStorage from '@react-native-firebase/storage';
 import { Platform } from 'react-native';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -35,14 +36,11 @@ if (Platform.OS === 'web') {
     });
 }
 
-// Initialize Firebase compat for expo-firebase-recaptcha web support
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-// Initialize Firebase services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+// Use native Firebase Auth on mobile to avoid web reCAPTCHA flow.
+export const auth = nativeAuth();
+export const webDb = getFirestore(app);
+export const webStorage = getStorage(app);
+export const db = nativeFirestore();
+export const storage = nativeStorage();
 
 export default app;

@@ -1,8 +1,8 @@
 import { useState } from "react";
+import auth from "@react-native-firebase/auth";
 import { Image, Text, TextInput, View } from "react-native";
 import logo from "../assets/images/logo.png";
 import CustomPresseableText from "../components/CustomPresseable";
-import { auth } from "../config/firebaseConfig";
 import { RegisterLayout } from "../layouts/RegisterLayout";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -41,7 +41,7 @@ export default function NameScreen({ navigation }: Props) {
         
         setIsLoading(true);
         try {
-            const user = auth.currentUser;
+            const user = auth().currentUser;
             if (user) {
                 const profile = await createClientProfile(user.uid, name, user.phoneNumber);
                 // Note: we don't dispatch login yet, usually happens after address
@@ -71,33 +71,35 @@ export default function NameScreen({ navigation }: Props) {
                 </View>
 
                 <View className="w-full flex-col items-center flex-1 justify-center gap-y-6 pb-20">
-                    <View className="w-full mb-6">
-                        <Text className="text-4xl text-slate-950 text-center font-manrope">{t.whatShouldWeCallYou}</Text>
-                        <Text className="text-base mt-3 text-slate-600 text-center font-jakarta">Tell us your name so we can personalize your experience</Text>
+                    <View className="w-full rounded-[32px] border border-white/15 bg-white/10 px-5 py-7 shadow-2xl shadow-black">
+                        <View className="w-full mb-6">
+                            <Text className="text-4xl text-white text-center font-manrope">{t.whatShouldWeCallYou}</Text>
+                            <Text className="text-base mt-3 text-white/70 text-center font-jakarta">Tell us your name so we can personalize your experience</Text>
+                        </View>
+
+                        <View className="w-full flex flex-col gap-y-2 mb-6">
+                            <Text className="text-sm font-semibold text-white/75 ml-2 font-jakarta">{t.fullName}</Text>
+                            <TextInput
+                                placeholder={t.enterName}
+                                placeholderTextColor="#ffffff99"
+                                value={name}
+                                onChangeText={setName}
+                                className={`${error ? "border-red-400" : "border-white/15"} bg-black/35 border rounded-[24px] px-5 py-4 w-full text-base text-white font-jakarta`}
+                            />
+                        </View>
+
+                        {error ? <Text className="w-full text-left text-sm text-red-500 mb-2 font-jakarta">{error}</Text> : null}
+
+                        {isLoading ? (
+                            <ActivityIndicator size="large" color="#f97316" className="my-4" />
+                        ) : (
+                            <CustomPresseableText
+                                stretch={true}
+                                onPress={handleCreateProfile}
+                                text={t.continue}
+                            />
+                        )}
                     </View>
-
-                    <View className="w-full flex flex-col gap-y-2 mb-6">
-                        <Text className="text-sm font-semibold text-slate-500 ml-2 font-jakarta">{t.fullName}</Text>
-                        <TextInput
-                            placeholder={t.enterName}
-                            placeholderTextColor="#94a3b8"
-                            value={name}
-                            onChangeText={setName}
-                            className={`${error ? "border-red-400" : "border-slate-200"} bg-white border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900 font-jakarta`}
-                        />
-                    </View>
-
-                    {error ? <Text className="w-full text-left text-sm text-red-500 mb-2 font-jakarta">{error}</Text> : null}
-
-                    {isLoading ? (
-                        <ActivityIndicator size="large" color="#0ea5e9" className="my-4" />
-                    ) : (
-                        <CustomPresseableText
-                            stretch={true}
-                            onPress={handleCreateProfile}
-                            text={t.continue}
-                        />
-                    )}
                 </View>
             </View>
         </RegisterLayout>

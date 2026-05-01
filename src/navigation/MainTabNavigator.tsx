@@ -37,14 +37,23 @@ export default function MainTabNavigator() {
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: '#0ea5e9',
-                tabBarInactiveTintColor: '#94a3b8',
+                tabBarActiveTintColor: '#f97316',
+                tabBarInactiveTintColor: '#ffffff99',
                 tabBarStyle: {
                     borderTopWidth: 1,
-                    borderTopColor: '#f1f5f9',
-                    height: 95,
-                    paddingBottom: 35,
+                    borderTopColor: '#ffffff1f',
+                    backgroundColor: '#090909',
+                    position: 'absolute',
+                    marginHorizontal: 18,
+                    marginBottom: 12,
+                    borderTopLeftRadius: 28,
+                    borderTopRightRadius: 28,
+                    borderBottomLeftRadius: 28,
+                    borderBottomRightRadius: 28,
+                    height: 82,
+                    paddingBottom: 20,
                     paddingTop: 10,
+                    elevation: 0,
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,

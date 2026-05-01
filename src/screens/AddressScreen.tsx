@@ -1,24 +1,21 @@
-import { doc, getDoc } from "firebase/firestore";
+import auth from "@react-native-firebase/auth";
+import { Ionicons } from "@expo/vector-icons";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import logo from "../assets/images/logo.png";
 import CustomPresseableText from "../components/CustomPresseable";
 import { LeafletMap } from "../components/LeafletMap";
-import { auth, db } from "../config/firebaseConfig";
-import { RegisterLayout } from "../layouts/RegisterLayout";
-
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { translations } from "../constants/translations";
+import { getOrCreateClientProfile, updateClientAddress } from "../firebase/auth";
+import { RegisterLayout } from "../layouts/RegisterLayout";
 import { RootStackParamList } from "../navigation/Rootnavigation";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { login } from "../store/slices/authSlice";
 import { addNotification } from "../store/slices/notificationsSlice";
-import { Ionicons } from "@expo/vector-icons";
 
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Address'>;
-
-import { updateClientAddress } from "../firebase/auth";
 
 /**
  * AddressScreen Component
@@ -50,7 +47,7 @@ export default function AddressScreen({ navigation }: Props) {
 
         setIsLoading(true);
         try {
-            const user = auth.currentUser;
+            const user = auth().currentUser;
             if (user) {
                 await updateClientAddress(user.uid, {
                     apartment,
@@ -58,26 +55,21 @@ export default function AddressScreen({ navigation }: Props) {
                     landmark
                 });
                 
-                // Fetch the updated profile to ensure we have the name for Redux
-                const userDoc = await getDoc(doc(db, "users-client", user.uid));
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-                    const loginPayload: { name: string; email?: string; role: 'client' | 'admin' } = {
-                        name: data.name,
-                        email: data.email || "",
-                        role: 'client'
-                    };
-                    dispatch(login(loginPayload));
-                    
-                    // Add Welcome Notification
-                    dispatch(addNotification({
-                        type: 'system',
-                        title: 'Welcome to Swipe & Shop!',
-                        body: `Hi ${data.name}, we're glad to have you! Explore our curated collections and start swiping.`,
-                        timeAgo: 'Just now',
-                        isRead: false
-                    }));
-                }
+                const profile = await getOrCreateClientProfile(user);
+                dispatch(login({
+                    name: profile.name,
+                    email: profile.email,
+                    phone: profile.phone,
+                    role: 'client'
+                }));
+
+                dispatch(addNotification({
+                    type: 'system',
+                    title: 'Welcome to Swipe & Shop!',
+                    body: `Hi ${profile.name}, we're glad to have you! Explore our curated collections and start swiping.`,
+                    timeAgo: 'Just now',
+                    isRead: false
+                }));
             } else {
                 setError("User session not found.");
             }
@@ -96,10 +88,10 @@ export default function AddressScreen({ navigation }: Props) {
                 <View className="w-full flex-row items-center justify-between mt-4 mb-4">
                     <Pressable
                         onPress={() => navigation.goBack()}
-                        className="p-2 bg-slate-100 rounded-full"
+                        className="p-3 bg-white/10 border border-white/15 rounded-full"
                         accessibilityLabel="Go back"
                     >
-                        <Ionicons name="arrow-back" size={22} color="#0f172a" />
+                        <Ionicons name="arrow-back" size={22} color="#ffffff" />
                     </Pressable>
                     <Image
                         source={logo}
@@ -111,52 +103,52 @@ export default function AddressScreen({ navigation }: Props) {
                 </View>
 
                 <ScrollView className="w-full flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
-                    <View className="w-full flex-col items-center justify-start gap-y-4">
+                    <View className="w-full flex-col items-center justify-start gap-y-4 rounded-[32px] border border-white/15 bg-white/10 px-5 py-7 shadow-2xl shadow-black">
                         <View className="w-full mb-2 mt-4">
-                            <Text className="text-4xl text-slate-950 text-center font-manrope">{t.whereShouldWeDeliver}</Text>
+                            <Text className="text-4xl text-white text-center font-manrope">{t.whereShouldWeDeliver}</Text>
                         </View>
 
                         <LeafletMap />
 
                         <View className="w-full flex-col gap-y-2 mt-6">
-                            <Text className="text-sm font-semibold text-slate-500 ml-2 font-jakarta">{t.apartmentStreet}</Text>
+                            <Text className="text-sm font-semibold text-white/75 ml-2 font-jakarta">{t.apartmentStreet}</Text>
                             <TextInput
                                 aria-label={t.enterApartment}
                                 placeholder={t.enterApartment}
-                                placeholderTextColor="#94a3b8"
+                                placeholderTextColor="#ffffff99"
                                 value={apartment}
                                 onChangeText={setApartment}
-                                className={`${error ? "border-red-400" : "border-slate-200"} bg-white border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900 text-start font-jakarta`}
+                                className={`${error ? "border-red-400" : "border-white/15"} bg-black/35 border rounded-[24px] px-5 py-4 w-full text-base text-white text-start font-jakarta`}
                             />
                         </View>
 
                         <View className="w-full flex-col gap-y-2 mt-2">
-                            <Text className="text-sm font-semibold text-slate-500 ml-2 font-jakarta">{t.localityArea}</Text>
+                            <Text className="text-sm font-semibold text-white/75 ml-2 font-jakarta">{t.localityArea}</Text>
                             <TextInput
                                 aria-label={t.enterLocality}
                                 placeholder={t.enterLocality}
-                                placeholderTextColor="#94a3b8"
+                                placeholderTextColor="#ffffff99"
                                 value={locality}
                                 onChangeText={setLocality}
-                                className={`${error ? "border-red-400" : "border-slate-200"} bg-white border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900 text-start font-jakarta`}
+                                className={`${error ? "border-red-400" : "border-white/15"} bg-black/35 border rounded-[24px] px-5 py-4 w-full text-base text-white text-start font-jakarta`}
                             />
                         </View>
 
                         <View className="w-full flex flex-col gap-y-2 mt-2 mb-6">
-                            <Text className="text-sm font-semibold text-slate-500 ml-2 font-jakarta">{t.landmarkOptional}</Text>
+                            <Text className="text-sm font-semibold text-white/75 ml-2 font-jakarta">{t.landmarkOptional}</Text>
                             <TextInput
                                 placeholder={t.landmark}
-                                placeholderTextColor="#94a3b8"
+                                placeholderTextColor="#ffffff99"
                                 value={landmark}
                                 onChangeText={setLandmark}
-                                className="bg-white border-slate-200 border-2 rounded-xl px-5 py-4 w-full text-base text-slate-900 text-start font-jakarta"
+                                className="bg-black/35 border-white/15 border rounded-[24px] px-5 py-4 w-full text-base text-white text-start font-jakarta"
                             />
                         </View>
 
                         {error ? <Text className="w-full text-left text-sm text-red-500 mb-4 font-jakarta">{error}</Text> : null}
 
                         {isLoading ? (
-                            <ActivityIndicator size="large" color="#0ea5e9" className="mb-4" />
+                            <ActivityIndicator size="large" color="#f97316" className="mb-4" />
                         ) : (
                             <CustomPresseableText
                                 stretch={true}

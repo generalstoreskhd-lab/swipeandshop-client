@@ -57,20 +57,20 @@ export default function BrowseProducts() {
     return (
         <View className="w-full mt-10 px-4 pb-20">
             <View className="flex flex-row justify-between items-center mb-6">
-                <Text className="text-xl font-bold text-slate-900 font-outfit">
+                <Text className="text-xl font-bold text-white font-outfit">
                     {searchQuery.length > 0 ? `Results for "${searchQuery}"` : (selectedCategory ? `${selectedCategory} Collection` : "Browse All Products")}
                 </Text>
                 
                 <TouchableOpacity 
                     onPress={toggleSort}
-                    className="flex-row items-center bg-slate-100 px-3 py-1.5 rounded-full"
+                    className="flex-row items-center bg-white/10 border border-white/15 px-3 py-1.5 rounded-full"
                 >
                     <Ionicons 
                         name={sortOrder === 'none' ? "swap-vertical" : (sortOrder === 'price-asc' ? "arrow-up" : "arrow-down")} 
                         size={16} 
-                        color="#475569" 
+                        color="#fb923c" 
                     />
-                    <Text className="text-slate-600 font-semibold text-xs font-inter ml-1.5">
+                    <Text className="text-white/75 font-semibold text-xs font-inter ml-1.5">
                         {sortOrder === 'none' ? "Sort" : (sortOrder === 'price-asc' ? "Price: Low-High" : "Price: High-Low")}
                     </Text>
                 </TouchableOpacity>
@@ -96,10 +96,10 @@ export default function BrowseProducts() {
             
             {!isSearching && displayedProducts.length === 0 && (
                 <View className="py-20 items-center justify-center">
-                    <View className="w-16 h-16 bg-slate-50 rounded-full items-center justify-center mb-4">
-                        <Ionicons name="search-outline" size={32} color="#cbd5e1" />
+                    <View className="w-16 h-16 bg-white/10 border border-white/15 rounded-full items-center justify-center mb-4">
+                        <Ionicons name="search-outline" size={32} color="#fb923c" />
                     </View>
-                    <Text className="text-slate-400 font-inter italic text-center">No products match your search. Try a different term.</Text>
+                    <Text className="text-white/55 font-inter italic text-center">No products match your search. Try a different term.</Text>
                 </View>
             )}
         </View>
